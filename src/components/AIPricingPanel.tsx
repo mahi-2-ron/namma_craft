@@ -1,6 +1,7 @@
 import React from 'react';
-import { Sparkles, TrendingUp, Info, ShieldCheck, Zap } from 'lucide-react';
+import { Sparkles, TrendingUp, Info, ShieldCheck, Zap, User } from 'lucide-react';
 import { motion } from 'motion/react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 interface AIPricingPanelProps {
   name: string;
@@ -42,17 +43,17 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
       <div className="relative z-10 space-y-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-accent">
-            <div className="w-10 h-10 rounded-2xl bg-accent/10 flex items-center justify-center">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-accent/20">
+              <img src="https://picsum.photos/seed/aarav/100/100" alt="Aarav" className="w-full h-full object-cover" />
             </div>
             <div>
-              <h4 className="font-display font-bold text-lg">AI Pricing Intelligence</h4>
-              <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest">Real-time Market Analysis</p>
+              <h4 className="font-display font-bold text-lg">Aarav's Pricing Advice</h4>
+              <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest">Personalized Intelligence</p>
             </div>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
             <ShieldCheck className="w-3 h-3" />
-            <span className="text-[9px] font-bold uppercase tracking-widest">Verified Suggestion</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest">Artisan Verified</span>
           </div>
         </div>
 
@@ -83,7 +84,7 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
             </div>
           </div>
 
-          <div className="bg-cream/30 rounded-3xl p-6 border border-highlight/10 space-y-6">
+          <div className="bg-cream/30 rounded-3xl p-6 border border-highlight/10 space-y-6 relative">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold text-text-soft uppercase tracking-widest mb-1">Recommended Start</p>
@@ -111,16 +112,21 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
           </div>
         </div>
 
-        <div className="flex gap-4 p-5 bg-primary/5 rounded-2xl border border-primary/5">
-          <Info className="w-5 h-5 text-accent shrink-0" />
-          <div className="space-y-1">
-            <p className="text-[11px] text-primary font-medium leading-relaxed">
-              Our AI analyzed <span className="font-bold">1,240 similar listings</span> in the {category || 'Heritage'} category.
-            </p>
-            <p className="text-[10px] text-text-soft leading-relaxed">
-              Suggestions are based on historical auction performance, current artisan trends, and regional demand patterns.
-            </p>
+        <div className="flex flex-col md:flex-row gap-8 items-center">
+          <div className="flex-1 flex gap-4 p-5 bg-primary/5 rounded-2xl border border-primary/5">
+            <Info className="w-5 h-5 text-accent shrink-0" />
+            <div className="space-y-1">
+              <p className="text-[11px] text-primary font-medium leading-relaxed">
+                I've analyzed <span className="font-bold">1,240 similar treasures</span> in the {category || 'Heritage'} category.
+              </p>
+              <p className="text-[10px] text-text-soft leading-relaxed">
+                These suggestions honor your craft's value while ensuring it finds a home quickly.
+              </p>
+            </div>
           </div>
+          <HandwrittenNote rotation={-3} className="!bg-accent/5 !border-none !p-2 !text-sm">
+            "Your craft is priceless, but let's find the right start!"
+          </HandwrittenNote>
         </div>
       </div>
     </motion.div>

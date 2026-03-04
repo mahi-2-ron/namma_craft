@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, ShoppingBag, User, Menu } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, Plus } from 'lucide-react';
 
 export const Navbar = ({ onNavigate, currentPage }: any) => {
   return (
@@ -28,7 +28,7 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
             { id: 'marketplace', label: 'Marketplace' },
             { id: 'auction-listing', label: 'Auctions' },
             { id: 'artisan', label: 'Artisans' },
-            { id: 'creator', label: 'Studio' },
+            { id: 'creator', label: 'Sell & Studio' },
             { id: 'admin', label: 'Admin' }
           ].map((item) => (
             <button 
@@ -37,6 +37,11 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
               className={`relative py-2 transition-all hover:text-accent group ${currentPage === item.id ? 'text-primary' : ''}`}
             >
               {item.label}
+              {item.id === 'creator' && (
+                <span className="absolute -top-4 -right-4 handwritten text-accent text-sm rotate-12 animate-pulse">
+                  New!
+                </span>
+              )}
               <div className={`absolute -bottom-1 left-0 h-[2px] bg-accent transition-all duration-500 ${currentPage === item.id ? 'w-full' : 'w-0 group-hover:w-full'}`} />
             </button>
           ))}
@@ -44,6 +49,13 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
       </div>
 
       <div className="flex items-center gap-8">
+        <button 
+          onClick={() => onNavigate('sell-product')}
+          className="hidden xl:flex items-center gap-2 text-accent hover:text-primary transition-colors font-bold text-[10px] uppercase tracking-widest border-b border-accent/30 pb-1"
+        >
+          <Plus className="w-3 h-3" /> Sell Product
+        </button>
+        
         <div className="relative hidden xl:block w-72">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-accent" />
           <input 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 
-export const Footer = () => {
+export const Footer = ({ onNavigate }: any) => {
   return (
     <footer className="bg-primary text-cream pt-32 pb-16 relative overflow-hidden">
       {/* Decorative Background */}
@@ -11,7 +11,10 @@ export const Footer = () => {
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-32">
           <div className="lg:col-span-5">
-            <a href="/" className="flex items-center gap-4 text-4xl font-display font-bold text-accent mb-10 group">
+            <button 
+              onClick={() => onNavigate && onNavigate('home')}
+              className="flex items-center gap-4 text-4xl font-display font-bold text-accent mb-10 group"
+            >
               <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:text-primary transition-all duration-500">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 22C12 22 16 18 16 12C16 6 12 4 12 4C12 4 8 6 8 12C8 18 12 22 12 22Z" fill="currentColor"/>
@@ -19,15 +22,15 @@ export const Footer = () => {
                 </svg>
               </div>
               NammaCraft
-            </a>
+            </button>
             <p className="text-cream/60 leading-relaxed mb-12 text-xl font-light max-w-md">
               A global stage for India's master artisans. We bridge the gap between traditional craftsmanship and modern living, ensuring every piece finds a home that appreciates its soul.
             </p>
             <div className="flex gap-6">
               {[Instagram, Twitter, Facebook].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-14 h-14 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 hover:bg-accent hover:text-primary hover:border-accent hover:-translate-y-2 transition-all duration-500">
+                <button key={idx} className="w-14 h-14 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 hover:bg-accent hover:text-primary hover:border-accent hover:-translate-y-2 transition-all duration-500">
                   <Icon className="w-6 h-6" />
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -35,20 +38,20 @@ export const Footer = () => {
           <div className="lg:col-span-2">
             <h4 className="text-accent font-bold uppercase tracking-[0.2em] text-xs mb-10">Market</h4>
             <ul className="space-y-6 text-cream/60 font-medium">
-              <li><a href="#" className="hover:text-accent transition-colors">New Arrivals</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Best Sellers</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Artisan Stories</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Gift Cards</a></li>
+              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">New Arrivals</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">Best Sellers</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('artisan')} className="hover:text-accent transition-colors">Artisan Stories</button></li>
+              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">Gift Cards</button></li>
             </ul>
           </div>
 
           <div className="lg:col-span-2">
             <h4 className="text-accent font-bold uppercase tracking-[0.2em] text-xs mb-10">Support</h4>
             <ul className="space-y-6 text-cream/60 font-medium">
-              <li><a href="#" className="hover:text-accent transition-colors">Shipping</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Returns</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">FAQ</a></li>
+              <li><button className="hover:text-accent transition-colors">Shipping</button></li>
+              <li><button className="hover:text-accent transition-colors">Returns</button></li>
+              <li><button className="hover:text-accent transition-colors">Contact</button></li>
+              <li><button className="hover:text-accent transition-colors">FAQ</button></li>
             </ul>
           </div>
 
@@ -78,12 +81,11 @@ export const Footer = () => {
             <p>© 2024 NammaCraft. Handcrafted with love in India.</p>
           </div>
           <div className="flex gap-16">
-            <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
+            <button className="hover:text-accent transition-colors">Privacy Policy</button>
+            <button className="hover:text-accent transition-colors">Terms of Service</button>
           </div>
         </div>
       </div>
     </footer>
-
   );
 };

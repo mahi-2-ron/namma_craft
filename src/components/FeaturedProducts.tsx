@@ -53,6 +53,13 @@ export const ProductCard = ({ image, name, artisan, price, region, rarity, stock
           )}
         </div>
 
+        {/* Handwritten "Handmade" Badge */}
+        <div className="absolute -right-2 top-12 z-20 rotate-12 pointer-events-none">
+          <div className="bg-accent/90 text-white px-4 py-1 rounded-lg handwritten text-lg shadow-lg">
+            Handmade
+          </div>
+        </div>
+
         <button 
           onClick={(e) => { e.stopPropagation(); }}
           className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-all z-10 shadow-lg hover:scale-110"

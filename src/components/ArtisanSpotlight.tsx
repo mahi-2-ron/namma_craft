@@ -54,6 +54,12 @@ export const ArtisanSpotlight = ({ onNavigate }: any) => {
               </div>
             </div>
 
+            <div className="mb-12">
+              <p className="handwritten text-saffron/80 text-3xl -rotate-3">
+                - Ananya Sharma
+              </p>
+            </div>
+
             <button 
               onClick={() => onNavigate('artisan')}
               className="btn-accent w-fit !bg-saffron hover:!bg-saffron/90"

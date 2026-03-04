@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Rocket, Brain, Globe, Smartphone, Sparkles, ShieldCheck } from 'lucide-react';
+import { Rocket, Brain, Globe, Smartphone, Sparkles, ShieldCheck, Map } from 'lucide-react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 const plans = [
   {
@@ -63,8 +64,15 @@ export const FuturePlans = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white p-10 rounded-[40px] border border-highlight/10 shadow-sm hover:shadow-premium transition-all group"
+              className="bg-white p-10 rounded-[40px] border border-highlight/10 shadow-sm hover:shadow-premium transition-all group relative"
             >
+              {index === 0 && (
+                <div className="absolute -top-6 -right-6 z-10 hidden lg:block">
+                  <HandwrittenNote rotation={10} className="!bg-accent/10 !text-accent !border-accent/20 !text-sm">
+                    "Coming Q3 2026"
+                  </HandwrittenNote>
+                </div>
+              )}
               <div className="w-14 h-14 rounded-2xl bg-cream flex items-center justify-center text-accent mb-6 group-hover:bg-primary group-hover:text-white transition-all">
                 <plan.icon className="w-7 h-7" />
               </div>
@@ -83,9 +91,14 @@ export const FuturePlans = () => {
         >
           <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
           <div className="relative z-10 max-w-3xl mx-auto">
-            <p className="text-cream/80 text-lg leading-relaxed italic">
+            <p className="text-cream/80 text-lg leading-relaxed italic mb-8">
               "By continuously combining technology with tradition, our goal is to preserve cultural heritage while creating sustainable global opportunities for local creators."
             </p>
+            <div className="flex justify-center">
+              <HandwrittenNote rotation={-2} className="!bg-white/10 !text-white !border-white/20 !text-lg">
+                "Preserving the past, building the future."
+              </HandwrittenNote>
+            </div>
           </div>
         </motion.div>
       </div>

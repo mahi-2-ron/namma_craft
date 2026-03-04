@@ -34,9 +34,9 @@ export const AuthenticityCertificate = ({
           />
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20, rotate: -1 }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20, rotate: 1 }}
             className="relative w-full max-w-2xl bg-[#FDFBF7] rounded-[40px] shadow-2xl overflow-hidden border-8 border-white"
           >
             {/* Certificate Background Pattern */}
@@ -70,8 +70,8 @@ export const AuthenticityCertificate = ({
               </div>
 
               <div className="w-full max-w-md space-y-8 mb-12">
-                <p className="text-text-soft italic text-lg leading-relaxed">
-                  This document certifies that the following item is an authentic, handmade creation, crafted with traditional techniques passed down through generations.
+                <p className="text-text-soft italic text-lg leading-relaxed font-serif">
+                  "This document certifies that the following item is an authentic, handmade creation, crafted with traditional techniques passed down through generations."
                 </p>
 
                 <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -90,7 +90,7 @@ export const AuthenticityCertificate = ({
                       <User className="w-3 h-3" />
                       <span className="text-[9px] font-bold uppercase tracking-widest">Master Artisan</span>
                     </div>
-                    <p className="text-primary font-display font-bold text-xl">{artisan}</p>
+                    <p className="text-primary font-handwriting text-3xl">{artisan}</p>
                   </div>
 
                   <div className="space-y-1">
@@ -138,11 +138,16 @@ export const AuthenticityCertificate = ({
 
               {/* Seal */}
               <div className="relative flex flex-col items-center">
-                <div className="w-24 h-24 bg-accent rounded-full shadow-xl flex items-center justify-center text-white border-4 border-white relative overflow-hidden group">
+                <motion.div 
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="w-24 h-24 bg-accent rounded-full shadow-xl flex items-center justify-center text-white border-4 border-white relative overflow-hidden group cursor-pointer"
+                >
                   <div className="absolute inset-0 mandala-bg opacity-20 group-hover:rotate-90 transition-transform duration-1000" />
                   <ShieldCheck className="w-12 h-12 relative z-10" />
-                </div>
-                <p className="mt-4 text-[10px] font-bold text-accent uppercase tracking-[0.4em]">Official Artisan Seal</p>
+                  {/* Stamped Effect Overlay */}
+                  <div className="absolute inset-0 bg-white/10 mix-blend-overlay pointer-events-none" />
+                </motion.div>
+                <p className="mt-4 text-[10px] font-bold text-accent uppercase tracking-[0.4em] font-handwriting text-lg">Official Artisan Seal</p>
               </div>
             </div>
           </motion.div>

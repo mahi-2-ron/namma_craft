@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Gift, ChevronRight, Sparkles, Package, Heart } from 'lucide-react';
+import { Gift, ChevronRight, Sparkles, Package, Heart, User } from 'lucide-react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 const bundles = [
   {
@@ -49,7 +50,10 @@ export const GiftBundles = ({ onNavigate }: any) => {
               Thoughtfully curated collections that bring together the best of Indian crafts and flavors in a premium gift experience.
             </p>
           </div>
-          <button className="btn-secondary !py-3 !px-8 text-xs uppercase tracking-widest flex items-center gap-2">
+          <button 
+            onClick={() => onNavigate('marketplace')}
+            className="btn-secondary !py-3 !px-8 text-xs uppercase tracking-widest flex items-center gap-2"
+          >
             View All Bundles <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -59,8 +63,15 @@ export const GiftBundles = ({ onNavigate }: any) => {
             <motion.div
               key={bundle.id}
               whileHover={{ y: -10 }}
-              className="group bg-cream/30 rounded-[48px] overflow-hidden border border-highlight/10 shadow-sm hover:shadow-premium transition-all duration-500"
+              className="group bg-cream/30 rounded-[48px] overflow-hidden border border-highlight/10 shadow-sm hover:shadow-premium transition-all duration-500 relative"
             >
+              {bundle.id === 2 && (
+                <div className="absolute -top-4 -right-4 z-20">
+                  <HandwrittenNote rotation={5} className="!bg-accent !text-white !border-none !text-sm !py-1 !px-3">
+                    "Most Loved"
+                  </HandwrittenNote>
+                </div>
+              )}
               <div className="relative h-64 overflow-hidden">
                 <img 
                   src={bundle.image} 
@@ -123,26 +134,47 @@ export const GiftBundles = ({ onNavigate }: any) => {
         </div>
 
         {/* Custom Bundle CTA */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mt-20 bg-primary rounded-[48px] p-12 text-white relative overflow-hidden"
-        >
-          <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
-          <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -mr-48 -mt-48" />
-          
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div className="max-w-xl text-center lg:text-left">
-              <h3 className="text-white text-3xl md:text-4xl mb-4">Create Your Own Heritage Box</h3>
-              <p className="text-cream/70 text-lg">
-                Mix and match your favorite crafts and flavors to create a personalized gift that tells a unique story.
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-32 items-center">
+          <div className="lg:col-span-4">
+            <div className="bg-white/40 backdrop-blur-md p-8 rounded-[32px] border border-white/60 shadow-premium relative">
+              <div className="absolute -top-6 -left-6">
+                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white shadow-lg">
+                  <User className="w-6 h-6" />
+                </div>
+              </div>
+              <h4 className="text-lg font-display font-bold text-primary mb-4">Curator's Note</h4>
+              <p className="font-handwriting text-xl text-primary leading-tight">
+                "I personally visited the weavers in Mysore to select the silk for our Heritage Pack. It's truly one-of-a-kind."
               </p>
+              <p className="text-[10px] text-accent font-bold uppercase tracking-widest mt-4">— Meera, Gift Curator</p>
             </div>
-            <button className="btn-accent !px-12 !py-5 whitespace-nowrap shadow-2xl shadow-accent/20">
-              Start Customizing
-            </button>
           </div>
-        </motion.div>
+          <div className="lg:col-span-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="bg-primary rounded-[48px] p-12 text-white relative overflow-hidden"
+            >
+              <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -mr-48 -mt-48" />
+              
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+                <div className="max-w-xl text-center lg:text-left">
+                  <h3 className="text-white text-3xl md:text-4xl mb-4">Create Your Own Heritage Box</h3>
+                  <p className="text-cream/70 text-lg">
+                    Mix and match your favorite crafts and flavors to create a personalized gift that tells a unique story.
+                  </p>
+                </div>
+                <button 
+                  onClick={() => onNavigate('marketplace')}
+                  className="btn-accent !px-12 !py-5 whitespace-nowrap shadow-2xl shadow-accent/20"
+                >
+                  Start Customizing
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

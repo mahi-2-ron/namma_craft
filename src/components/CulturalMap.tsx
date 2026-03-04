@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, Utensils, Palette, User, X, ChevronRight, Sparkles, Star } from 'lucide-react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 const regionData: Record<string, any> = {
   'Rajasthan': {
@@ -8,42 +9,46 @@ const regionData: Record<string, any> = {
     foods: ['Ghevar', 'Dal Baati Churma', 'Ker Sangri'],
     artisans: ['Ananya Sharma', 'Priya Das'],
     description: 'The Land of Kings, known for its vibrant colors and desert heritage.',
-    color: '#E67E22'
+    color: '#E67E22',
+    note: 'The desert blooms in cobalt blue here.'
   },
   'Karnataka': {
     crafts: ['Mysore Silk', 'Channapatna Toys', 'Sandalwood Carving'],
     foods: ['Mysore Pak', 'Bisi Bele Bath', 'Dharwad Pedha'],
     artisans: ['Lakshmi Devi', 'Suresh Gowda'],
     description: 'A blend of ancient empires and modern innovation, rich in silk and sandalwood.',
-    color: '#6B1D1D'
+    color: '#6B1D1D',
+    note: 'Scent of sandalwood in every breeze.'
   },
   'Uttar Pradesh': {
     crafts: ['Banarasi Silk', 'Chikan Embroidery', 'Teak Wood Carving'],
     foods: ['Petha', 'Lucknowi Kebabs', 'Banarasi Paan'],
     artisans: ['Rajesh Kumar', 'Vikram Singh'],
     description: 'The heartland of India, home to the Taj Mahal and spiritual Varanasi.',
-    color: '#F39C12'
+    color: '#F39C12',
+    note: 'Where spirituality meets fine silk.'
   },
   'Gujarat': {
     crafts: ['Patola Silk', 'Kutch Embroidery', 'Lippan Art'],
     foods: ['Dhokla', 'Thepla', 'Khandvi'],
     artisans: ['Savitaben', 'Arjun Bhai'],
     description: 'A coastal state with a rich mercantile history and intricate textile traditions.',
-    color: '#D4145A'
+    color: '#D4145A',
+    note: 'Colors as bright as the Rann of Kutch.'
   },
   'West Bengal': {
     crafts: ['Kantha Stitch', 'Terracotta Art', 'Jamdani Silk'],
     foods: ['Rosogolla', 'Sandesh', 'Darjeeling Tea'],
     artisans: ['Arjun Das', 'Tenzing Norgay'],
     description: 'The cultural capital, famous for its literature, art, and sweets.',
-    color: '#8B2E2E'
+    color: '#8B2E2E',
+    note: 'Sweetness in every word and art.'
   }
 };
 
 export const CulturalMap = ({ onNavigate }: any) => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
-  // Simplified India Map SVG paths (Representative)
   const regions = [
     { id: 'Rajasthan', path: 'M30,30 L50,20 L70,30 L60,50 L40,50 Z', x: 35, y: 35 },
     { id: 'Uttar Pradesh', path: 'M70,30 L90,35 L95,55 L75,60 L65,50 Z', x: 75, y: 45 },
@@ -66,22 +71,29 @@ export const CulturalMap = ({ onNavigate }: any) => {
             <MapPin className="w-3 h-3" /> Interactive Heritage Explorer
           </motion.div>
           <h2 className="text-primary mb-4">Explore India's Cultural Map</h2>
-          <p className="text-text-soft max-w-2xl mx-auto">
-            Click on a region to discover the unique crafts, flavors, and master artisans that define its heritage.
+          <p className="text-text-soft max-w-2xl mx-auto font-serif italic">
+            "Every region has a heartbeat, every craft has a soul. Click to discover the stories behind the hands."
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Map Container */}
-          <div className="lg:col-span-7 bg-white/40 backdrop-blur-md rounded-[48px] p-12 border border-highlight/10 shadow-premium aspect-square flex items-center justify-center relative">
+          <div className="lg:col-span-7 bg-white/40 backdrop-blur-md rounded-[48px] p-12 border border-highlight/10 shadow-premium aspect-square flex items-center justify-center relative group">
+            {/* Hand-drawn style SVG */}
             <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-2xl">
+              <filter id="hand-drawn">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" />
+              </filter>
+              
               {regions.map((region) => (
                 <motion.path
                   key={region.id}
                   d={region.path}
                   fill={selectedRegion === region.id ? regionData[region.id].color : '#FDFBF7'}
                   stroke={selectedRegion === region.id ? '#fff' : '#6B1D1D'}
-                  strokeWidth="0.5"
+                  strokeWidth="0.8"
+                  filter="url(#hand-drawn)"
                   whileHover={{ scale: 1.05, fill: regionData[region.id].color, stroke: '#fff' }}
                   onClick={() => setSelectedRegion(region.id)}
                   className="cursor-pointer transition-colors duration-300"
@@ -89,24 +101,32 @@ export const CulturalMap = ({ onNavigate }: any) => {
                   animate={{ opacity: 1 }}
                 />
               ))}
-              {/* Region Labels */}
+              
               {regions.map((region) => (
                 <text
                   key={`label-${region.id}`}
                   x={region.x}
                   y={region.y}
-                  fontSize="3"
+                  fontSize="3.5"
                   fontWeight="bold"
                   fill={selectedRegion === region.id ? '#fff' : '#6B1D1D'}
-                  className="pointer-events-none uppercase tracking-tighter"
+                  className="pointer-events-none uppercase tracking-tighter font-display"
                   textAnchor="middle"
                 >
                   {region.id}
                 </text>
               ))}
             </svg>
+
+            {/* Handwritten Map Annotations */}
+            <HandwrittenNote className="absolute top-10 right-10 hidden md:block" rotation={5}>
+              "Land of Kings"
+            </HandwrittenNote>
+            <HandwrittenNote className="absolute bottom-20 left-10 hidden md:block" rotation={-12}>
+              "Silk & Sandalwood"
+            </HandwrittenNote>
             
-            <div className="absolute bottom-8 left-8 flex items-center gap-4">
+            <div className="absolute bottom-8 right-8 flex items-center gap-4 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/5">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-accent" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-text-soft">Selected</span>
@@ -150,9 +170,14 @@ export const CulturalMap = ({ onNavigate }: any) => {
                     </button>
                   </div>
 
-                  <p className="text-text-soft leading-relaxed italic border-l-2 border-accent/20 pl-4">
-                    {regionData[selectedRegion].description}
-                  </p>
+                  <div className="relative">
+                    <p className="text-text-soft leading-relaxed italic border-l-2 border-accent/20 pl-4 mb-4">
+                      {regionData[selectedRegion].description}
+                    </p>
+                    <p className="font-handwriting text-accent text-2xl rotate-[-2deg]">
+                      {regionData[selectedRegion].note}
+                    </p>
+                  </div>
 
                   <div className="space-y-6">
                     {/* Crafts */}
@@ -163,7 +188,7 @@ export const CulturalMap = ({ onNavigate }: any) => {
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {regionData[selectedRegion].crafts.map((craft: string) => (
-                          <span key={craft} className="px-3 py-1 bg-cream rounded-lg text-[11px] font-medium text-primary border border-highlight/20">
+                          <span key={craft} className="px-3 py-1 bg-cream rounded-lg text-[11px] font-medium text-primary border border-highlight/20 hover:bg-accent/5 transition-colors cursor-default">
                             {craft}
                           </span>
                         ))}
@@ -178,7 +203,7 @@ export const CulturalMap = ({ onNavigate }: any) => {
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {regionData[selectedRegion].foods.map((food: string) => (
-                          <span key={food} className="px-3 py-1 bg-accent/5 rounded-lg text-[11px] font-medium text-accent border border-accent/10">
+                          <span key={food} className="px-3 py-1 bg-accent/5 rounded-lg text-[11px] font-medium text-accent border border-accent/10 hover:bg-accent/10 transition-colors cursor-default">
                             {food}
                           </span>
                         ))}
@@ -209,20 +234,23 @@ export const CulturalMap = ({ onNavigate }: any) => {
 
                   <button 
                     onClick={() => onNavigate('marketplace')}
-                    className="w-full btn-primary !py-4 text-xs uppercase tracking-widest flex items-center justify-center gap-2"
+                    className="w-full btn-primary !py-4 text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl shadow-primary/10"
                   >
                     Explore {selectedRegion} Collection <ChevronRight className="w-4 h-4" />
                   </button>
                 </motion.div>
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center p-12 bg-white/40 backdrop-blur-md rounded-[40px] border border-dashed border-highlight/30">
+                <div className="h-full flex flex-col items-center justify-center text-center p-12 bg-white/40 backdrop-blur-md rounded-[40px] border border-dashed border-highlight/30 relative">
                   <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-accent mb-6 shadow-premium">
                     <MapPin className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-display font-bold text-primary mb-4">Select a Region</h3>
-                  <p className="text-text-soft text-sm">
+                  <p className="text-text-soft text-sm mb-8">
                     Discover the soul of India by exploring its diverse regional heritage. Click any highlighted area on the map to begin your journey.
                   </p>
+                  <HandwrittenNote rotation={-5}>
+                    "Where shall we go first?"
+                  </HandwrittenNote>
                 </div>
               )}
             </AnimatePresence>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ChevronRight, Sparkles } from 'lucide-react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 export const Hero = ({ onNavigate }: any) => {
   return (
@@ -52,6 +53,13 @@ export const Hero = ({ onNavigate }: any) => {
               >
                 Marketplace
               </button>
+              <button 
+                onClick={() => onNavigate('sell-product')}
+                className="w-full sm:w-auto flex items-center justify-center gap-3 text-accent hover:text-primary transition-all font-bold text-sm uppercase tracking-widest border-b-2 border-accent/20 hover:border-accent pb-2 mt-4 lg:mt-0"
+              >
+                Sell Your Craft
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </motion.div>
 
@@ -63,10 +71,14 @@ export const Hero = ({ onNavigate }: any) => {
           >
             {/* Collage Layout */}
             <div className="relative w-full h-full">
+              {/* Organic Background Blobs */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-accent/5 organic-blob -rotate-12 pointer-events-none" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-primary/5 organic-blob rotate-45 pointer-events-none" />
+
               {/* Main Image */}
               <motion.div 
                 whileHover={{ scale: 1.02 }}
-                className="absolute top-0 right-0 w-4/5 aspect-[4/5] rounded-[40px] overflow-hidden shadow-premium z-10"
+                className="absolute top-0 right-0 w-4/5 aspect-[4/5] rounded-[40px] organic-blob overflow-hidden shadow-premium z-10"
               >
                 <img 
                   src="https://picsum.photos/seed/indian-pottery/800/1000" 
@@ -82,7 +94,7 @@ export const Hero = ({ onNavigate }: any) => {
                 initial={{ x: 20, y: 20 }}
                 animate={{ x: 0, y: 0 }}
                 whileHover={{ scale: 1.05, zIndex: 20 }}
-                className="absolute bottom-10 left-0 w-1/2 aspect-square rounded-[32px] overflow-hidden shadow-premium z-20 border-4 border-cream"
+                className="absolute bottom-10 left-0 w-1/2 aspect-square rounded-[32px] organic-blob overflow-hidden shadow-premium z-20 border-4 border-cream"
               >
                 <img 
                   src="https://picsum.photos/seed/indian-textile/600/600" 
@@ -92,12 +104,21 @@ export const Hero = ({ onNavigate }: any) => {
                 />
               </motion.div>
 
+              {/* Handwritten Note 1 */}
+              <HandwrittenNote 
+                className="absolute -bottom-12 -left-8 z-30"
+                rotation={-8}
+                delay={1}
+              >
+                "Hand-spun with love"
+              </HandwrittenNote>
+
               {/* Secondary Image 2 */}
               <motion.div 
                 initial={{ x: -20, y: -20 }}
                 animate={{ x: 0, y: 0 }}
                 whileHover={{ scale: 1.05, zIndex: 20 }}
-                className="absolute top-20 -left-10 w-2/5 aspect-square rounded-[24px] overflow-hidden shadow-premium z-0 border-4 border-cream"
+                className="absolute top-20 -left-10 w-2/5 aspect-square rounded-[24px] organic-blob overflow-hidden shadow-premium z-0 border-4 border-cream"
               >
                 <img 
                   src="https://picsum.photos/seed/indian-woodcraft/400/400" 
@@ -106,6 +127,15 @@ export const Hero = ({ onNavigate }: any) => {
                   referrerPolicy="no-referrer"
                 />
               </motion.div>
+
+              {/* Handwritten Note 2 */}
+              <HandwrittenNote 
+                className="absolute -top-8 right-0 z-30"
+                rotation={12}
+                delay={1.2}
+              >
+                "Centuries of tradition"
+              </HandwrittenNote>
 
               {/* Floating Badge */}
               <motion.div 
@@ -120,6 +150,5 @@ export const Hero = ({ onNavigate }: any) => {
         </div>
       </div>
     </section>
-
   );
 };

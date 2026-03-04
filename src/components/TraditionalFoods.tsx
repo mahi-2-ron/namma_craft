@@ -58,6 +58,7 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
           </motion.div>
           
           <motion.button 
+            onClick={() => onNavigate('marketplace')}
             whileHover={{ gap: '1.5rem' }}
             className="flex items-center gap-4 text-accent font-bold uppercase tracking-widest text-xs group"
           >

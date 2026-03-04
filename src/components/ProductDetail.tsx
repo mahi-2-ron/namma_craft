@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Star, Minus, Plus, ShoppingCart, Zap, Heart, Share2, ChevronLeft, ChevronRight, MapPin, Gavel, ShieldCheck, Truck, Package, Gem, Award } from 'lucide-react';
+import { Star, Minus, Plus, ShoppingCart, Zap, Heart, Share2, ChevronLeft, ChevronRight, MapPin, Gavel, ShieldCheck, Truck, Package, Gem, Award, Camera, Palette, User } from 'lucide-react';
 import { ProductCard } from './FeaturedProducts';
 import { AuthenticityCertificate } from './AuthenticityCertificate';
+import { HandwrittenNote } from './HandwrittenNote';
 
 export const ProductDetail = ({ onNavigate }: any) => {
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState('description');
   const [activeImage, setActiveImage] = useState(0);
   const [isCertificateOpen, setIsCertificateOpen] = useState(false);
 
@@ -27,9 +27,10 @@ export const ProductDetail = ({ onNavigate }: any) => {
       'https://picsum.photos/seed/pottery-detail-2/800/1000',
       'https://picsum.photos/seed/pottery-detail-3/800/1000',
     ],
-    description: 'This exquisite blue pottery vase is a masterpiece of Jaipur craftsmanship. Each piece is hand-painted with intricate floral motifs using traditional cobalt blue and turquoise dyes. The unique glaze and texture are achieved through a laborious process that involves no clay, making it a rare and precious addition to your home decor.',
-    culturalStory: 'Blue Pottery is a traditional craft of Jaipur, Rajasthan, with roots tracing back to Turko-Persian origins. Unlike conventional pottery, it does not use clay; instead, it is made from a mix of quartz stone powder, powdered glass, Multani Mitti (Fuller\'s Earth), borax, gum, and water. The art was brought to Jaipur in the 17th century and has since become an iconic symbol of the city\'s rich artistic heritage.',
+    description: 'This exquisite blue pottery vase is a masterpiece of Jaipur craftsmanship. Each piece is hand-painted with intricate floral motifs using traditional cobalt blue and turquoise dyes.',
+    culturalStory: 'Blue Pottery is a traditional craft of Jaipur, Rajasthan, with roots tracing back to Turko-Persian origins. Unlike conventional pottery, it does not use clay; instead, it is made from a mix of quartz stone powder, powdered glass, Multani Mitti, borax, gum, and water.',
     artisanQuote: 'Every brushstroke is a conversation with history, and each kiln firing is a prayer for perfection.',
+    artisanNote: 'I spent three days painting the floral patterns on this specific vase. The cobalt blue turned out exceptionally deep this time.'
   };
 
   const relatedProducts = [
@@ -54,7 +55,7 @@ export const ProductDetail = ({ onNavigate }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-32">
           {/* Left: Image Gallery */}
           <div className="lg:col-span-7 space-y-6 relative">
-            <div className="absolute top-8 left-8 z-10">
+            <div className="absolute top-8 left-8 z-10 flex flex-col gap-3">
               <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -62,6 +63,9 @@ export const ProductDetail = ({ onNavigate }: any) => {
               >
                 Handcrafted in {product.location}
               </motion.span>
+              <HandwrittenNote rotation={-5} className="!bg-accent/10 !border-none !p-1 !text-sm">
+                "One of a kind"
+              </HandwrittenNote>
             </div>
             
             <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden shadow-premium bg-white group">
@@ -208,25 +212,68 @@ export const ProductDetail = ({ onNavigate }: any) => {
                     Join Auction
                   </button>
                 </div>
-
-                <div className="flex items-center justify-between pt-8 border-t border-highlight/20">
-                  <div className="flex gap-8">
-                    <button className="flex items-center gap-2 text-text-soft hover:text-accent transition-all text-xs font-bold uppercase tracking-widest">
-                      <Heart className="w-4 h-4" /> Wishlist
-                    </button>
-                    <button className="flex items-center gap-2 text-text-soft hover:text-accent transition-all text-xs font-bold uppercase tracking-widest">
-                      <Share2 className="w-4 h-4" /> Share
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-2 text-emerald-600">
-                    <div className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">In Stock</span>
-                  </div>
-                </div>
               </div>
             </motion.div>
           </div>
         </div>
+
+        {/* Artisan's Note Section */}
+        <section className="mb-32">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            <div className="lg:col-span-5">
+              <div className="bg-white/40 backdrop-blur-md p-10 rounded-[40px] border border-white/60 shadow-premium relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-6 opacity-5">
+                  <Palette className="w-24 h-24" />
+                </div>
+                <h3 className="text-2xl font-display font-bold text-primary mb-6 flex items-center gap-3">
+                  <User className="w-6 h-6 text-accent" />
+                  Artisan's Personal Note
+                </h3>
+                <p className="font-handwriting text-2xl text-primary leading-relaxed mb-8">
+                  "{product.artisanNote}"
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-accent/20">
+                    <img src="https://picsum.photos/seed/indian-face/100/100" alt={product.artisan} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="text-primary font-bold">{product.artisan}</p>
+                    <p className="text-[10px] text-accent uppercase tracking-widest font-bold">Master Artisan</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-7">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-3xl font-display font-bold text-primary flex items-center gap-4">
+                  <Camera className="w-8 h-8 text-accent" />
+                  Crafting Process
+                </h3>
+                <span className="font-handwriting text-2xl text-accent -rotate-3">"Captured in the studio"</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  { img: 'https://picsum.photos/seed/process-1/400/400', caption: 'Initial sketch' },
+                  { img: 'https://picsum.photos/seed/process-2/400/400', caption: 'Detailed painting' },
+                  { img: 'https://picsum.photos/seed/process-3/400/400', caption: 'Kiln firing' }
+                ].map((item, idx) => (
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 2 : -2 }}
+                    className="bg-white p-4 pb-10 shadow-xl rounded-sm border border-primary/5 relative"
+                  >
+                    <div className="aspect-square overflow-hidden mb-4 rounded-sm">
+                      <img src={item.img} alt={item.caption} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    </div>
+                    <p className="font-handwriting text-primary text-lg text-center absolute bottom-3 left-0 right-0">
+                      {item.caption}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Craft Story Section */}
         <section className="mb-32 relative overflow-hidden rounded-[60px] bg-cream-dark p-12 md:p-24 border border-highlight/20">
@@ -430,6 +477,5 @@ export const ProductDetail = ({ onNavigate }: any) => {
         </div>
       </section>
     </div>
-
   );
 };

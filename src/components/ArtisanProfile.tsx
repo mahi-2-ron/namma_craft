@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Star, Heart, MessageCircle, Share2, Palette, Hammer, Scissors, Coffee, Gem } from 'lucide-react';
+import { MapPin, Star, Heart, MessageCircle, Share2, Palette, Hammer, Scissors, Coffee, Gem, Camera } from 'lucide-react';
 import { ProductCard } from './FeaturedProducts';
+import { HandwrittenNote } from './HandwrittenNote';
 
 export const ArtisanProfile = ({ onNavigate }: any) => {
   const artisanProducts = [
@@ -36,14 +37,15 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="w-48 h-48 md:w-72 md:h-72 rounded-full border-[12px] border-cream overflow-hidden shadow-premium z-10"
+              className="w-48 h-48 md:w-72 md:h-72 rounded-full border-[12px] border-cream overflow-hidden shadow-premium z-10 relative group"
             >
               <img 
                 src="https://picsum.photos/seed/indian-face/600/600" 
                 alt="Ananya Sharma" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 border-4 border-white/20 rounded-full pointer-events-none" />
             </motion.div>
             
             <div className="flex-1 pb-6">
@@ -56,7 +58,9 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                   <div className="flex items-center gap-3 mb-3">
                     <span className="badge-indian">Master Artisan</span>
                     <span className="badge-indian !bg-accent/10 !text-accent !border-accent/20">Traditional Craft</span>
-                    <span className="text-accent font-medium text-sm tracking-widest uppercase ml-2">Est. 2008</span>
+                    <HandwrittenNote className="!bg-accent/10 !border-none !p-1 !text-sm" rotation={5}>
+                      Est. 2008
+                    </HandwrittenNote>
                   </div>
                   <h1 className="text-5xl md:text-7xl font-display font-bold text-primary mb-4 tracking-tight">Ananya Sharma</h1>
                   <div className="flex flex-wrap items-center gap-6 text-text-soft">
@@ -82,22 +86,19 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                   transition={{ delay: 0.3 }}
                   className="flex flex-wrap items-center gap-4"
                 >
-                  <button className="btn-primary group">
+                  <button 
+                    onClick={() => alert('Following Ananya Sharma!')}
+                    className="btn-primary group"
+                  >
                     <Heart className="w-5 h-5 group-hover:fill-white transition-colors" />
                     Follow Artisan
                   </button>
-                  <button className="btn-secondary !px-6 flex items-center gap-2 group">
+                  <button 
+                    onClick={() => alert('Opening message window...')}
+                    className="btn-secondary !px-6 flex items-center gap-2 group"
+                  >
                     <MessageCircle className="w-5 h-5 group-hover:text-accent" />
                     Contact
-                  </button>
-                  <button 
-                    onClick={() => {
-                      const el = document.getElementById('artisan-collection');
-                      el?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="text-primary font-bold uppercase tracking-widest text-sm hover:text-accent transition-colors"
-                  >
-                    View Products
                   </button>
                   <button className="p-4 bg-white/80 backdrop-blur-md border border-highlight/30 rounded-full hover:bg-white hover:shadow-lg transition-all">
                     <Share2 className="w-5 h-5 text-primary" />
@@ -129,8 +130,17 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                   Growing up in the vibrant streets of Jaipur, I was always surrounded by the mesmerizing blue pottery that our city is famous for. My journey began in my father's workshop, where I learned the delicate art of mixing quartz, glass, and multani mitti.
                 </p>
                 <p>
-                  I've spent the last 15 years perfecting the traditional floral motifs while introducing contemporary designs that appeal to a global audience. For me, blue pottery is not just a craft; it's a legacy that I am proud to carry forward. Each brushstroke is a conversation with history, and each kiln firing is a prayer for perfection.
+                  I've spent the last 15 years perfecting the traditional floral motifs while introducing contemporary designs that appeal to a global audience. For me, blue pottery is not just a craft; it's a legacy that I am proud to carry forward.
                 </p>
+              </div>
+
+              <div className="mt-12 flex flex-wrap gap-8">
+                <HandwrittenNote rotation={-2}>
+                  "My father's first kiln was my playground."
+                </HandwrittenNote>
+                <HandwrittenNote rotation={3} delay={0.5}>
+                  "Cobalt blue is the color of my soul."
+                </HandwrittenNote>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
@@ -140,7 +150,7 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                   </div>
                   <h4 className="font-display font-bold text-xl mb-3 text-primary">Natural Pigments</h4>
                   <p className="text-text-soft text-sm leading-relaxed">
-                    We use only natural mineral oxides to achieve our signature cobalt blue and turquoise hues, ensuring each piece is eco-friendly and unique.
+                    We use only natural mineral oxides to achieve our signature cobalt blue and turquoise hues.
                   </p>
                 </div>
                 <div className="bg-white p-8 rounded-2xl border border-highlight/20 shadow-sm relative overflow-hidden group">
@@ -149,33 +159,39 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                   </div>
                   <h4 className="font-display font-bold text-xl mb-3 text-primary">Hand-Painted</h4>
                   <p className="text-text-soft text-sm leading-relaxed">
-                    Every motif is painted by hand using fine squirrel-hair brushes, a technique that requires years of practice and a steady hand.
+                    Every motif is painted by hand using fine squirrel-hair brushes, a technique that requires years of practice.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Crafting Process */}
+            {/* Crafting Process - Polaroid Style */}
             <section>
-              <h2 className="text-4xl font-display font-bold mb-10 text-primary flex items-center gap-4">
-                <Hammer className="w-8 h-8 text-accent" />
-                The Crafting Process
-              </h2>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-4xl font-display font-bold text-primary flex items-center gap-4">
+                  <Camera className="w-8 h-8 text-accent" />
+                  Studio Moments
+                </h2>
+                <span className="font-handwriting text-2xl text-accent -rotate-3">"Behind the scenes"</span>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
-                  { step: "01", title: "Molding", desc: "The unique dough is hand-molded into shapes without a potter's wheel." },
-                  { step: "02", title: "Painting", desc: "Intricate floral and geometric patterns are hand-painted with cobalt blue." },
-                  { step: "03", title: "Glazing", desc: "A special glass-based glaze is applied before firing at low temperatures." }
+                  { img: 'https://picsum.photos/seed/pottery-1/400/400', caption: 'Mixing the dough' },
+                  { img: 'https://picsum.photos/seed/pottery-2/400/400', caption: 'Fine brush strokes' },
+                  { img: 'https://picsum.photos/seed/pottery-3/400/400', caption: 'Final kiln check' }
                 ].map((item, idx) => (
-                  <div key={idx} className="relative group">
-                    <div className="text-6xl font-display text-accent/10 absolute -top-6 -left-2 group-hover:text-accent/20 transition-colors">
-                      {item.step}
+                  <motion.div 
+                    key={idx}
+                    whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 2 : -2 }}
+                    className="bg-white p-4 pb-12 shadow-xl rounded-sm border border-primary/5 relative"
+                  >
+                    <div className="aspect-square overflow-hidden mb-4 rounded-sm">
+                      <img src={item.img} alt={item.caption} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
-                    <div className="relative pt-4">
-                      <h4 className="font-bold text-primary mb-2">{item.title}</h4>
-                      <p className="text-text-soft text-sm leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
+                    <p className="font-handwriting text-primary text-xl text-center absolute bottom-4 left-0 right-0">
+                      {item.caption}
+                    </p>
+                  </motion.div>
                 ))}
               </div>
             </section>
@@ -200,7 +216,10 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
           {/* Right Column: Stats & Reviews */}
           <div className="lg:col-span-4 space-y-12">
             <div className="glass-premium p-10 rounded-3xl border border-white/50 shadow-premium sticky top-24">
-              <h3 className="text-2xl font-display font-bold mb-8 text-primary">Artisan Stats</h3>
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-2xl font-display font-bold text-primary">Artisan Stats</h3>
+                <HandwrittenNote className="!p-1 !text-xs" rotation={10}>Verified</HandwrittenNote>
+              </div>
               <div className="space-y-8">
                 <div className="flex justify-between items-center group">
                   <span className="text-text-soft group-hover:text-primary transition-colors">Total Sales</span>
@@ -227,7 +246,10 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                 </div>
               </div>
               
-              <button className="w-full mt-10 btn-primary py-5 text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3">
+              <button 
+                onClick={() => alert('Opening message window...')}
+                className="w-full mt-10 btn-primary py-5 text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3"
+              >
                 <MessageCircle className="w-6 h-6" /> 
                 Message Artisan
               </button>
@@ -236,7 +258,7 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
                 <h4 className="text-sm font-bold text-primary mb-6 uppercase tracking-widest">Recent Reviews</h4>
                 <div className="space-y-6">
                   {reviews.map(review => (
-                    <div key={review.id} className="bg-white/50 p-6 rounded-2xl border border-white/80 shadow-sm">
+                    <div key={review.id} className="bg-white/50 p-6 rounded-2xl border border-white/80 shadow-sm relative">
                       <div className="flex justify-between items-center mb-3">
                         <span className="font-bold text-primary">{review.user}</span>
                         <div className="flex gap-0.5">
@@ -262,7 +284,7 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
       <section className="section-spacing mt-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="absolute inset-0 mandala-bg opacity-[0.05] -z-10" />
-        <div className="container-custom text-center">
+        <div className="container-custom text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -277,9 +299,12 @@ export const ArtisanProfile = ({ onNavigate }: any) => {
               <button className="btn-secondary px-12 py-5 text-lg">Share Her Story</button>
             </div>
           </motion.div>
+          
+          <HandwrittenNote className="absolute -bottom-10 right-20 hidden lg:block" rotation={10}>
+            "Namaste from Jaipur!"
+          </HandwrittenNote>
         </div>
       </section>
     </div>
-
   );
 };

@@ -25,6 +25,9 @@ import { ArtisanStory } from './components/ArtisanStory';
 import { CulturalMap } from './components/CulturalMap';
 import { GiftBundles } from './components/GiftBundles';
 import { FuturePlans } from './components/FuturePlans';
+import { SellProduct } from './components/SellProduct';
+import { LiveStudio } from './components/LiveStudio';
+import { HumanAssistant } from './components/HumanAssistant';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -51,6 +54,7 @@ export default function App() {
             <CategoryGrid onNavigate={setCurrentPage} />
             <CulturalMap onNavigate={setCurrentPage} />
             <FeaturedProducts onNavigate={setCurrentPage} />
+            <LiveStudio />
             <GiftBundles onNavigate={setCurrentPage} />
             <ArtisanStory onNavigate={setCurrentPage} />
             <TraditionalFoods onNavigate={setCurrentPage} />
@@ -66,6 +70,8 @@ export default function App() {
           <AdminDashboard onNavigate={setCurrentPage} />
         ) : currentPage === 'creator' ? (
           <CreatorDashboard onNavigate={setCurrentPage} />
+        ) : currentPage === 'sell-product' ? (
+          <SellProduct onNavigate={setCurrentPage} />
         ) : currentPage === 'auction-listing' ? (
           <AuctionListing onNavigate={setCurrentPage} />
         ) : currentPage === 'auction' ? (
@@ -88,7 +94,8 @@ export default function App() {
           <ProductDetail onNavigate={setCurrentPage} />
         )}
       </main>
-      <Footer />
+      <Footer onNavigate={setCurrentPage} />
+      <HumanAssistant />
     </div>
   );
 }

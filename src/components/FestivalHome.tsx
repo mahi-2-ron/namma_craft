@@ -9,8 +9,10 @@ import {
   Star, 
   Palette, 
   Utensils,
-  ArrowLeft
+  ArrowLeft,
+  User
 } from 'lucide-react';
+import { HandwrittenNote } from './HandwrittenNote';
 
 const festivalData = {
   name: 'Diwali',
@@ -57,8 +59,13 @@ export const FestivalHome = ({ onNavigate }: any) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-3xl relative"
           >
+            <div className="absolute -top-12 -right-12 z-20 hidden lg:block">
+              <HandwrittenNote rotation={10} className="!bg-accent !text-white !border-none !text-lg">
+                "Happy Diwali!"
+              </HandwrittenNote>
+            </div>
             <button 
               onClick={() => onNavigate('discovery')}
               className="flex items-center gap-2 text-accent font-bold text-[10px] uppercase tracking-widest mb-8 hover:gap-4 transition-all"
@@ -101,7 +108,12 @@ export const FestivalHome = ({ onNavigate }: any) => {
 
       <div className="container-custom relative z-10 -mt-20">
         {/* Decor Section */}
-        <section className="mb-32">
+        <section className="mb-32 relative">
+          <div className="absolute -top-20 right-0 z-10 hidden lg:block">
+            <HandwrittenNote rotation={-5} className="!bg-white/60 !text-primary !border-primary/10 !text-sm">
+              "Hand-picked for your home"
+            </HandwrittenNote>
+          </div>
           <div className="flex justify-between items-end mb-12">
             <div className="bg-white/80 backdrop-blur-md p-8 rounded-t-[40px] border-x border-t border-highlight/10 inline-block">
               <div className="flex items-center gap-3 mb-4">

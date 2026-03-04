@@ -236,6 +236,23 @@ export const Marketplace = ({ onNavigate }: any) => {
                   ))}
                 </div>
               </div>
+
+              {/* Sell CTA */}
+              <div className="bg-primary p-8 rounded-[32px] text-cream relative overflow-hidden">
+                <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
+                <div className="relative z-10">
+                  <h4 className="font-display font-bold text-lg mb-4">Are you an Artisan?</h4>
+                  <p className="text-xs text-cream/60 mb-6 leading-relaxed">
+                    Join our community of master creators and share your heritage with the world.
+                  </p>
+                  <button 
+                    onClick={() => onNavigate('sell-product')}
+                    className="w-full btn-accent !py-2.5 !px-4 text-[10px] uppercase tracking-widest"
+                  >
+                    Start Selling
+                  </button>
+                </div>
+              </div>
             </div>
           </aside>
 

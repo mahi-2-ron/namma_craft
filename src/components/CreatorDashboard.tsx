@@ -92,12 +92,21 @@ export const CreatorDashboard = ({ onNavigate }: any) => {
 
   const sidebarItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'sell-product', label: 'Sell Product', icon: Plus },
     { id: 'products', label: 'My Products', icon: Package },
     { id: 'auctions', label: 'My Auctions', icon: Gavel },
     { id: 'orders', label: 'Orders', icon: ShoppingBag },
     { id: 'earnings', label: 'Earnings', icon: Wallet },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
+
+  const handleSidebarClick = (id: string) => {
+    if (id === 'sell-product') {
+      onNavigate('sell-product');
+    } else {
+      setActiveTab(id);
+    }
+  };
 
   return (
     <div className="bg-cream min-h-screen flex">
@@ -116,7 +125,7 @@ export const CreatorDashboard = ({ onNavigate }: any) => {
           {sidebarItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => handleSidebarClick(item.id)}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all ${activeTab === item.id ? 'bg-accent text-primary font-bold' : 'text-cream/60 hover:bg-white/5 hover:text-cream'}`}
             >
               <item.icon className="w-5 h-5" />
@@ -158,10 +167,16 @@ export const CreatorDashboard = ({ onNavigate }: any) => {
             </button>
             <div className="h-8 w-[1px] bg-highlight/10" />
             <button 
+              onClick={() => onNavigate('sell-product')}
+              className="btn-accent !py-2.5 !px-6 text-[10px] uppercase tracking-widest shadow-lg shadow-accent/20"
+            >
+              Sell Product
+            </button>
+            <button 
               onClick={() => onNavigate('add-food')}
               className="btn-secondary !py-2.5 !px-6 text-[10px] uppercase tracking-widest shadow-lg shadow-primary/5"
             >
-              Add Food Item
+              Add Food
             </button>
             <button 
               onClick={() => onNavigate('create-auction')}
