@@ -8,7 +8,7 @@ const foods = [
     name: 'Mysore Pak',
     region: 'Karnataka Specialty',
     tag: 'Homemade',
-    image: 'https://picsum.photos/seed/mysorepak/600/400',
+    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800',
     desc: 'A rich, buttery sweet made from gram flour, ghee, and sugar.'
   },
   {
@@ -16,7 +16,7 @@ const foods = [
     name: 'Rajasthani Ghevar',
     region: 'Rajasthan Specialty',
     tag: 'Festival Special',
-    image: 'https://picsum.photos/seed/ghevar/600/400',
+    image: 'https://images.unsplash.com/photo-1605065522891-6b120ee659c4?auto=format&fit=crop&q=80&w=800',
     desc: 'A disc-shaped honeycomb sweet made from all-purpose flour and soaked in sugar syrup.'
   },
   {
@@ -24,7 +24,7 @@ const foods = [
     name: 'Malabar Parotta',
     region: 'Kerala Specialty',
     tag: 'Homemade',
-    image: 'https://picsum.photos/seed/parotta/600/400',
+    image: 'https://images.unsplash.com/photo-1633337474564-1d9478ca4e2e?auto=format&fit=crop&q=80&w=800',
     desc: 'Layered flatbread made from maida flour, popular in Southern India.'
   },
   {
@@ -32,7 +32,7 @@ const foods = [
     name: 'Hyderabadi Biryani',
     region: 'Telangana Specialty',
     tag: 'Festival Special',
-    image: 'https://picsum.photos/seed/biryani/600/400',
+    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=800',
     desc: 'A world-famous aromatic rice dish cooked with exotic spices and tender meat.'
   }
 ];
@@ -41,7 +41,7 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
   return (
     <section className="py-24 bg-cream relative overflow-hidden">
       <div className="absolute inset-0 mandala-bg opacity-[0.03] pointer-events-none" />
-      
+
       <div className="container-custom relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
           <motion.div
@@ -56,8 +56,8 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
             <h2 className="text-5xl font-display font-bold text-primary mb-4">Taste India’s Traditional Foods</h2>
             <p className="text-text-soft text-lg max-w-xl">Homemade specialties from local communities, crafted with recipes passed down through generations.</p>
           </motion.div>
-          
-          <motion.button 
+
+          <motion.button
             onClick={() => onNavigate('marketplace')}
             whileHover={{ gap: '1.5rem' }}
             className="flex items-center gap-4 text-accent font-bold uppercase tracking-widest text-xs group"
@@ -78,9 +78,9 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
               className="group bg-white rounded-[32px] overflow-hidden border border-highlight/10 shadow-sm hover:shadow-premium transition-all"
             >
               <div className="relative h-64 overflow-hidden">
-                <img 
-                  src={food.image} 
-                  alt={food.name} 
+                <img
+                  src={food.image}
+                  alt={food.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute top-4 left-4">
@@ -92,7 +92,7 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
                   <Heart className="w-4 h-4" />
                 </button>
               </div>
-              
+
               <div className="p-8">
                 <div className="flex items-center gap-2 mb-2">
                   <Utensils className="w-3 h-3 text-accent" />
@@ -100,8 +100,8 @@ export const TraditionalFoods = ({ onNavigate }: any) => {
                 </div>
                 <h3 className="text-xl font-display font-bold text-primary mb-3 group-hover:text-accent transition-colors">{food.name}</h3>
                 <p className="text-text-soft text-sm line-clamp-2 mb-6 leading-relaxed italic">"{food.desc}"</p>
-                
-                <button 
+
+                <button
                   onClick={() => onNavigate('food-detail')}
                   className="w-full py-4 bg-cream/50 rounded-2xl text-primary font-bold text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all"
                 >
