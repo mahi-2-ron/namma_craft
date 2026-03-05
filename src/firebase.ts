@@ -1,23 +1,20 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
-// Firebase configuration
-// Replace these with your actual Firebase project credentials
-// Go to https://console.firebase.google.com → Create Project → 
-// Project Settings → Add Web App → Copy config
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDemoKeyReplaceMeWithYourActualKey",
-    authDomain: "namma-craft.firebaseapp.com",
-    projectId: "namma-craft",
-    storageBucket: "namma-craft.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef123456"
+    apiKey: "AIzaSyCAaWXN6qojbBL_bHOwVBhy8f1nAJHUVuQ",
+    authDomain: "vijnanalab.firebaseapp.com",
+    projectId: "vijnanalab",
+    storageBucket: "vijnanalab.firebasestorage.app",
+    messagingSenderId: "407063617574",
+    appId: "1:407063617574:web:11f5ac68215576f5d6c6e7"
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Add scopes for Google profile info
+// Request Google profile info
 googleProvider.addScope('profile');
 googleProvider.addScope('email');
