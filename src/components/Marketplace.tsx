@@ -371,7 +371,7 @@ export const Marketplace = ({ onNavigate }: any) => {
       </div>
 
       {/* CTA Section */}
-      <section className="section-spacing bg-primary text-cream mandala-bg relative overflow-hidden">
+      <section className="pt-16 pb-0 bg-primary text-cream mandala-bg relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-transparent to-primary pointer-events-none" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />

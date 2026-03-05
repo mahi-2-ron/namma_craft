@@ -237,8 +237,8 @@ export const FestivalHome = ({ onNavigate }: any) => {
         </section>
 
         {/* Featured Artisan */}
-        <section>
-          <div className="bg-white rounded-[64px] p-16 border border-highlight/10 relative overflow-hidden">
+        <section className="mb-16">
+          <div className="bg-white rounded-[64px] p-8 lg:p-12 border border-highlight/10 relative overflow-hidden">
             <div className="flex flex-col lg:flex-row items-center gap-16">
               <div className="w-full lg:w-1/2">
                 <div className="relative">
