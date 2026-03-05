@@ -108,7 +108,22 @@ export const Marketplace = ({ onNavigate }: any) => {
     { id: 8, name: 'Kashmiri Saffron (1g)', creator: 'Bilal Ahmad', price: 450, region: 'Pampore, J&K', tag: 'Specialty', image: 'https://picsum.photos/seed/saffron/600/800' },
   ];
 
-  const activeProducts = activeTab === 'crafts' ? craftProducts : foodProducts;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const activeProducts = (activeTab === 'crafts' ? craftProducts : foodProducts).filter(p => {
+    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.artisan?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.creator?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.region?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // In a real app, products would have a category field. 
+    // For now, if "All" is selected or (mock logic) the name contains the category, it matches.
+    const matchesCategory = selectedCategory === 'All';
+
+    return matchesSearch && matchesCategory && p.price <= priceRange;
+  });
+
   const activeCategories = activeTab === 'crafts' ? craftCategories : foodCategories;
 
   return (
@@ -130,14 +145,14 @@ export const Marketplace = ({ onNavigate }: any) => {
           <div className="flex justify-center mb-12">
             <div className="bg-white/50 backdrop-blur-md p-1.5 rounded-[24px] border border-primary/5 flex gap-2">
               <button
-                onClick={() => setActiveTab('crafts')}
+                onClick={() => { setActiveTab('crafts'); setSelectedCategory('All'); }}
                 className={`px-10 py-3 rounded-[20px] text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'crafts' ? 'bg-primary text-white shadow-lg' : 'text-text-soft hover:text-primary'
                   }`}
               >
                 Handmade Crafts
               </button>
               <button
-                onClick={() => setActiveTab('foods')}
+                onClick={() => { setActiveTab('foods'); setSelectedCategory('All'); }}
                 className={`px-10 py-3 rounded-[20px] text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'foods' ? 'bg-primary text-white shadow-lg' : 'text-text-soft hover:text-primary'
                   }`}
               >
@@ -159,6 +174,8 @@ export const Marketplace = ({ onNavigate }: any) => {
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={`Search by ${activeTab === 'crafts' ? 'craft' : 'food'}, region or creator...`}
               className="search-bar w-full pl-12 pr-6 !h-[50px] !bg-white/60"
             />
