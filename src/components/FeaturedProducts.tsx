@@ -1,8 +1,12 @@
 import React from 'react';
 import { Heart, ShoppingCart, ChevronRight, Gavel, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useToast } from '../ToastContext';
 
-export const ProductCard = ({ image, name, artisan, price, region, rarity, stock, isPopularInAuction, onNavigate }: any) => {
+export const ProductCard = ({ id, image, name, artisan, price, region, rarity, stock, isPopularInAuction, onNavigate }: any) => {
+  const { showToast } = useToast();
+  const [isLiked, setIsLiked] = React.useState(false);
+
   const getRarityColor = (level: string) => {
     switch (level?.toLowerCase()) {
       case 'one-of-a-kind': return 'bg-purple-500 text-white';
@@ -22,21 +26,21 @@ export const ProductCard = ({ image, name, artisan, price, region, rarity, stock
   };
 
   return (
-    <motion.div 
+    <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      onClick={() => onNavigate && onNavigate('product')}
+      onClick={() => onNavigate && onNavigate(`product/${id || 1}`)}
       className="group cursor-pointer relative bg-white rounded-[32px] p-4 shadow-sm hover:shadow-premium transition-all duration-500 border border-highlight/10"
     >
       <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden mb-6">
-        <img 
-          src={image || `https://picsum.photos/seed/indian-craft-${name.replace(/\s+/g, '-').toLowerCase()}/800/1000`} 
-          alt={name} 
+        <img
+          src={image || `https://picsum.photos/seed/indian-craft-${name.replace(/\s+/g, '-').toLowerCase()}/800/1000`}
+          alt={name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+
         <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
           <span className="badge-indian shadow-lg backdrop-blur-md bg-white/80 border-white/50 text-[10px]">
             {region || 'Handmade in India'}
@@ -60,15 +64,25 @@ export const ProductCard = ({ image, name, artisan, price, region, rarity, stock
           </div>
         </div>
 
-        <button 
-          onClick={(e) => { e.stopPropagation(); }}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsLiked(!isLiked);
+            showToast(isLiked ? 'Removed from favorites' : 'Added to favorites');
+          }}
           className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-all z-10 shadow-lg hover:scale-110"
         >
-          <Heart className="w-4 h-4 text-primary hover:text-accent transition-colors" />
+          <Heart className={`w-4 h-4 transition-colors ${isLiked ? 'fill-accent text-accent' : 'text-primary'}`} />
         </button>
 
         <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-          <button className="w-full btn-primary !py-3 text-xs flex items-center justify-center gap-2 shadow-xl">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              showToast('Added to your collection!');
+            }}
+            className="w-full btn-primary !py-3 text-xs flex items-center justify-center gap-2 shadow-xl"
+          >
             <ShoppingCart className="w-4 h-4" /> Add to Collection
           </button>
         </div>
@@ -78,7 +92,7 @@ export const ProductCard = ({ image, name, artisan, price, region, rarity, stock
         <div className="flex justify-between items-start gap-2">
           <h3 className="text-xl font-display font-bold text-primary leading-tight group-hover:text-accent transition-colors truncate">{name}</h3>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <p className="text-sm text-text-soft font-medium flex items-center gap-2">
             <span className="w-4 h-[1px] bg-accent/30" />
@@ -142,7 +156,7 @@ export const FeaturedProducts = ({ onNavigate }: any) => {
               Each creation is a testament to the skill and dedication of our master artisans, preserving techniques passed down through centuries.
             </p>
           </div>
-          <button 
+          <button
             onClick={() => onNavigate('marketplace')}
             className="btn-secondary group flex items-center gap-2"
           >
