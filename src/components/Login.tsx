@@ -50,6 +50,40 @@ export const Login = ({ onNavigate }: any) => {
             ))}
           </div>
 
+          <div className="space-y-4 mb-10">
+            <button
+              type="button"
+              onClick={() => {
+                showToast('Connecting to Google Accounts...', 'info');
+                setTimeout(() => {
+                  showToast(`Signed in successfully as ${role}!`);
+                  if (role === 'admin') onNavigate('admin');
+                  else if (role === 'seller') onNavigate('creator');
+                  else onNavigate('home');
+                }, 1200);
+              }}
+              className="w-full flex items-center justify-center gap-4 py-4 bg-white border-2 border-highlight/10 rounded-2xl hover:bg-cream transition-all text-sm font-bold text-primary shadow-sm group"
+            >
+              <Chrome className="w-5 h-5 group-hover:rotate-12 transition-transform text-[#4285F4]" />
+              Sign in with Google
+            </button>
+            <button
+              type="button"
+              onClick={() => showToast('GitHub login coming soon!', 'info')}
+              className="w-full flex items-center justify-center gap-4 py-4 bg-[#24292F] text-white rounded-2xl hover:opacity-90 transition-all text-sm font-bold shadow-lg"
+            >
+              <Github className="w-5 h-5" />
+              Continue with GitHub
+            </button>
+          </div>
+
+          <div className="relative flex items-center justify-center mb-10">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-highlight/10"></div>
+            </div>
+            <span className="relative px-4 bg-white text-[10px] font-bold text-text-soft uppercase tracking-widest">Or use your email</span>
+          </div>
+
           <form className="space-y-5" onSubmit={(e) => {
             e.preventDefault();
             if (role === 'admin') onNavigate('admin');
@@ -91,23 +125,7 @@ export const Login = ({ onNavigate }: any) => {
             </button>
           </form>
 
-          <div className="mt-10">
-            <div className="relative flex items-center justify-center mb-8">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-highlight/10"></div>
-              </div>
-              <span className="relative px-4 bg-white text-[10px] font-bold text-text-soft uppercase tracking-widest">Or continue with</span>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center gap-3 py-4 bg-cream/30 rounded-2xl hover:bg-cream transition-all text-sm font-bold text-primary">
-                <Chrome className="w-4 h-4" /> Google
-              </button>
-              <button className="flex items-center justify-center gap-3 py-4 bg-cream/30 rounded-2xl hover:bg-cream transition-all text-sm font-bold text-primary">
-                <Github className="w-4 h-4" /> Github
-              </button>
-            </div>
-          </div>
 
           <p className="text-center mt-10 text-sm text-text-soft">
             {isLogin ? "Don't have an account?" : "Already have an account?"}
