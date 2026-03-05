@@ -87,25 +87,25 @@ export const Marketplace = ({ onNavigate }: any) => {
   const [priceRange, setPriceRange] = useState(5000);
 
   const craftProducts = [
-    { id: 1, name: 'Hand-Painted Blue Pottery Vase', artisan: 'Ananya Sharma', price: 2450, region: 'Jaipur, Rajasthan', image: 'https://picsum.photos/seed/jaipur-pottery/600/800', rarity: 'Rare', stock: 5, isPopularInAuction: true },
-    { id: 2, name: 'Hand-Woven Banarasi Silk Stole', artisan: 'Rajesh Kumar', price: 4500, region: 'Varanasi, UP', image: 'https://picsum.photos/seed/silk/600/800', rarity: 'Limited Edition', stock: 2, isPopularInAuction: false },
-    { id: 3, name: 'Intricate Teak Wood Carving', artisan: 'Vikram Singh', price: 3200, region: 'Saharanpur, UP', image: 'https://picsum.photos/seed/wood/600/800', rarity: 'One-of-a-kind', stock: 1, isPopularInAuction: true },
-    { id: 4, name: 'Traditional Meenakari Jhumkas', artisan: 'Priya Das', price: 1800, region: 'Bikaner, Rajasthan', image: 'https://picsum.photos/seed/jewelry-india/600/800', rarity: 'Common', stock: 12, isPopularInAuction: false },
-    { id: 5, name: 'Hand-Block Printed Cushion', artisan: 'Suresh Meena', price: 850, region: 'Sanganer, Rajasthan', image: 'https://picsum.photos/seed/block-print/600/800', rarity: 'Common', stock: 25, isPopularInAuction: false },
-    { id: 6, name: 'Terracotta Diya Set', artisan: 'Kavita Devi', price: 450, region: 'Gorakhpur, UP', image: 'https://picsum.photos/seed/diya/600/800', rarity: 'Common', stock: 50, isPopularInAuction: true },
-    { id: 7, name: 'Hand-Woven Jute Basket', artisan: 'Arjun Das', price: 1200, region: 'Kolkata, WB', image: 'https://picsum.photos/seed/jute/600/800', rarity: 'Rare', stock: 8, isPopularInAuction: false },
-    { id: 8, name: 'Dhokra Art Figurine', artisan: 'Sunita Murmu', price: 2100, region: 'Bastar, Chhattisgarh', image: 'https://picsum.photos/seed/dhokra/600/800', rarity: 'Limited Edition', stock: 3, isPopularInAuction: true },
+    { id: 1, name: 'Hand-Painted Blue Pottery Vase', artisan: 'Ananya Sharma', price: 2450, region: 'Jaipur, Rajasthan', image: 'https://picsum.photos/seed/jaipur-pottery/600/800', rarity: 'Rare', stock: 5, isPopularInAuction: true, category: 'Pottery' },
+    { id: 2, name: 'Hand-Woven Banarasi Silk Stole', artisan: 'Rajesh Kumar', price: 4500, region: 'Varanasi, UP', image: 'https://picsum.photos/seed/silk/600/800', rarity: 'Limited Edition', stock: 2, isPopularInAuction: false, category: 'Textiles' },
+    { id: 3, name: 'Intricate Teak Wood Carving', artisan: 'Vikram Singh', price: 3200, region: 'Saharanpur, UP', image: 'https://picsum.photos/seed/wood/600/800', rarity: 'One-of-a-kind', stock: 1, isPopularInAuction: true, category: 'Woodwork' },
+    { id: 4, name: 'Traditional Meenakari Jhumkas', artisan: 'Priya Das', price: 1800, region: 'Bikaner, Rajasthan', image: 'https://picsum.photos/seed/jewelry-india/600/800', rarity: 'Common', stock: 12, isPopularInAuction: false, category: 'Jewelry' },
+    { id: 5, name: 'Hand-Block Printed Cushion', artisan: 'Suresh Meena', price: 850, region: 'Sanganer, Rajasthan', image: 'https://picsum.photos/seed/block-print/600/800', rarity: 'Common', stock: 25, isPopularInAuction: false, category: 'Textiles' },
+    { id: 6, name: 'Terracotta Diya Set', artisan: 'Kavita Devi', price: 450, region: 'Gorakhpur, UP', image: 'https://picsum.photos/seed/diya/600/800', rarity: 'Common', stock: 50, isPopularInAuction: true, category: 'Pottery' },
+    { id: 7, name: 'Hand-Woven Jute Basket', artisan: 'Arjun Das', price: 1200, region: 'Kolkata, WB', image: 'https://picsum.photos/seed/jute/600/800', rarity: 'Rare', stock: 8, isPopularInAuction: false, category: 'Pottery' },
+    { id: 8, name: 'Dhokra Art Figurine', artisan: 'Sunita Murmu', price: 2100, region: 'Bastar, Chhattisgarh', image: 'https://picsum.photos/seed/dhokra/600/800', rarity: 'Limited Edition', stock: 3, isPopularInAuction: true, category: 'Pottery' },
   ];
 
   const foodProducts = [
-    { id: 1, name: 'Authentic Mysore Pak', creator: 'Lakshmi Devi', price: 450, region: 'Mysore, Karnataka', tag: 'Homemade', image: '/images/food/mysore-pak.png' },
-    { id: 2, name: 'Rajasthani Ghevar', creator: 'Shanti Devi', price: 650, region: 'Jaipur, Rajasthan', tag: 'Festival Special', image: '/images/food/ghevar.png' },
-    { id: 3, name: 'Malabar Parotta (Pack of 5)', creator: 'Mariam Beevi', price: 180, region: 'Kozhikode, Kerala', tag: 'Homemade', image: '/images/food/parotta.png' },
-    { id: 4, name: 'Organic Lakadong Turmeric', creator: 'Kong Mary', price: 320, region: 'Jaintia Hills, Meghalaya', tag: 'Organic', image: '/images/food/turmeric.png' },
-    { id: 5, name: 'Hand-Pounded Red Rice', creator: 'Suresh Gowda', price: 240, region: 'Coorg, Karnataka', tag: 'Organic', image: '/images/food/redrice.png' },
-    { id: 6, name: 'Spicy Mango Pickle', creator: 'Amma\'s Kitchen', price: 150, region: 'Guntur, AP', tag: 'Homemade', image: '/images/food/pickle.png' },
-    { id: 7, name: 'Darjeeling First Flush Tea', creator: 'Tenzing Norgay', price: 850, region: 'Darjeeling, WB', tag: 'Specialty', image: '/images/food/tea.png' },
-    { id: 8, name: 'Kashmiri Saffron (1g)', creator: 'Bilal Ahmad', price: 450, region: 'Pampore, J&K', tag: 'Specialty', image: '/images/food/saffron.png' },
+    { id: 1, name: 'Authentic Mysore Pak', creator: 'Lakshmi Devi', price: 450, region: 'Mysore, Karnataka', tag: 'Homemade', image: '/images/food/mysore-pak.png', category: 'Sweets' },
+    { id: 2, name: 'Rajasthani Ghevar', creator: 'Shanti Devi', price: 650, region: 'Jaipur, Rajasthan', tag: 'Festival Special', image: '/images/food/ghevar.png', category: 'Sweets' },
+    { id: 3, name: 'Malabar Parotta (Pack of 5)', creator: 'Mariam Beevi', price: 180, region: 'Kozhikode, Kerala', tag: 'Homemade', image: '/images/food/parotta.png', category: 'Savories' },
+    { id: 4, name: 'Organic Lakadong Turmeric', creator: 'Kong Mary', price: 320, region: 'Jaintia Hills, Meghalaya', tag: 'Organic', image: '/images/food/turmeric.png', category: 'Spices' },
+    { id: 5, name: 'Hand-Pounded Red Rice', creator: 'Suresh Gowda', price: 240, region: 'Coorg, Karnataka', tag: 'Organic', image: '/images/food/redrice.png', category: 'Savories' },
+    { id: 6, name: 'Spicy Mango Pickle', creator: 'Amma\'s Kitchen', price: 150, region: 'Guntur, AP', tag: 'Homemade', image: '/images/food/pickle.png', category: 'Pickles' },
+    { id: 7, name: 'Darjeeling First Flush Tea', creator: 'Tenzing Norgay', price: 850, region: 'Darjeeling, WB', tag: 'Specialty', image: '/images/food/tea.png', category: 'Beverages' },
+    { id: 8, name: 'Kashmiri Saffron (1g)', creator: 'Bilal Ahmad', price: 450, region: 'Pampore, J&K', tag: 'Specialty', image: '/images/food/saffron.png', category: 'Spices' },
   ];
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -117,9 +117,7 @@ export const Marketplace = ({ onNavigate }: any) => {
       p.creator?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.region?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // In a real app, products would have a category field. 
-    // For now, if "All" is selected or (mock logic) the name contains the category, it matches.
-    const matchesCategory = selectedCategory === 'All';
+    const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
 
     return matchesSearch && matchesCategory && p.price <= priceRange;
   });
