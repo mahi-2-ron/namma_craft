@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Lock, ArrowRight, Github, Chrome, User, ShieldCheck, LogIn } from 'lucide-react';
+import { Mail, Lock, ArrowRight, User, ShieldCheck } from 'lucide-react';
 import { useToast } from '../ToastContext';
 import { useAuth } from '../AuthContext';
 
@@ -121,18 +121,8 @@ export const Login = ({ onNavigate }: any) => {
             )}
           </button>
 
-          {/* GitHub Button */}
-          <button
-            type="button"
-            onClick={() => showToast('GitHub login coming soon!', 'info')}
-            className="w-full flex items-center justify-center gap-4 py-4 bg-[#24292F] text-white rounded-2xl hover:bg-[#1a1f24] transition-all text-sm font-bold shadow-lg mb-8"
-          >
-            <Github className="w-5 h-5" />
-            Continue with GitHub
-          </button>
-
           {/* Divider */}
-          <div className="relative flex items-center justify-center mb-8">
+          <div className="relative flex items-center justify-center my-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-highlight/10"></div>
             </div>
