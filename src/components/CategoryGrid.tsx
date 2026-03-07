@@ -14,7 +14,7 @@ export const CategoryGrid = ({ onNavigate }: any) => {
   return (
     <section className="section-spacing bg-cream relative overflow-hidden">
       <div className="absolute inset-0 mandala-bg opacity-[0.03] pointer-events-none" />
-      
+
       <div className="container-custom relative z-10">
         <div className="text-center mb-20 max-w-2xl mx-auto">
           <div className="flex items-center justify-center gap-3 mb-6">
@@ -28,7 +28,7 @@ export const CategoryGrid = ({ onNavigate }: any) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-10">
           {categories.map((cat, idx) => (
             <motion.div
               key={cat.name}
@@ -38,30 +38,30 @@ export const CategoryGrid = ({ onNavigate }: any) => {
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -12 }}
               onClick={() => onNavigate('marketplace')}
-              className="group flex flex-col items-center gap-8 cursor-pointer"
+              className="group flex flex-col items-center gap-4 md:gap-8 cursor-pointer"
             >
-              <div className="relative w-full aspect-square rounded-[48px] overflow-hidden bg-white border border-highlight/10 flex items-center justify-center transition-all duration-700 group-hover:shadow-premium group-hover:border-accent/30">
-                <img 
-                  src={cat.image} 
-                  alt={cat.name} 
+              <div className="relative w-full aspect-square rounded-[32px] md:rounded-[48px] overflow-hidden bg-white border border-highlight/10 flex items-center justify-center transition-all duration-700 group-hover:shadow-premium group-hover:border-accent/30">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
                   className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity duration-700"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                
+
                 {/* Decorative Pattern Overlay */}
                 <div className="absolute inset-0 mandala-bg opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-700" />
-                
-                <div className="relative z-10 p-8 rounded-[32px] bg-cream/50 backdrop-blur-sm shadow-sm group-hover:scale-110 group-hover:bg-white transition-all duration-700">
-                  <cat.icon className="w-10 h-10 text-primary group-hover:text-accent transition-colors duration-500" />
+
+                <div className="relative z-10 p-4 md:p-8 rounded-[20px] md:rounded-[32px] bg-cream/50 backdrop-blur-sm shadow-sm group-hover:scale-110 group-hover:bg-white transition-all duration-700">
+                  <cat.icon className="w-6 h-6 md:w-10 md:h-10 text-primary group-hover:text-accent transition-colors duration-500" />
                 </div>
               </div>
-              
+
               <div className="text-center">
-                <h3 className="font-display font-bold text-2xl text-primary group-hover:text-accent transition-colors duration-500 mb-2">{cat.name}</h3>
+                <h3 className="font-display font-bold text-lg md:text-2xl text-primary group-hover:text-accent transition-colors duration-500 mb-1 md:mb-2">{cat.name}</h3>
                 <div className="flex flex-col items-center">
-                  <div className="h-[2px] w-0 bg-accent group-hover:w-12 transition-all duration-500 mb-3" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">Explore Collection</span>
+                  <div className="h-[2px] w-0 bg-accent group-hover:w-12 transition-all duration-500 mb-2 md:mb-3" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 hidden md:inline">Explore Collection</span>
                 </div>
               </div>
             </motion.div>
