@@ -5,11 +5,11 @@ const API_URL = 'http://localhost:5000/api';
 // USER
 // ============================================
 
-export const saveUserProfile = async (firebaseUid: string, displayName: string, email: string, photoURL: string, role: string, age?: number, location?: string, phone?: string) => {
+export const saveUserProfile = async (firebaseUid: string, displayName: string, email: string, photoURL: string, role: string, age?: number, location?: string, phone?: string, gender?: string, bio?: string, state?: string) => {
     const res = await fetch(`${API_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firebaseUid, displayName, email, photoURL, role, age, location, phone }),
+        body: JSON.stringify({ firebaseUid, displayName, email, photoURL, role, age, location, phone, gender, bio, state }),
     });
     return res.json();
 };

@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
     age: { type: Number },
     location: { type: String },
     phone: { type: String },
+    gender: { type: String },
+    bio: { type: String },
+    state: { type: String },
 }, { timestamps: true });
 
 export const UserModel = mongoose.model('User', userSchema);

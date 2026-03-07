@@ -14,6 +14,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const [age, setAge] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
+  const [gender, setGender] = useState('');
+  const [state, setState] = useState('');
+  const [bio, setBio] = useState('');
 
   // Sync mode if it changes
   React.useEffect(() => {
@@ -37,6 +40,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
         age: age ? parseInt(age) : undefined,
         location,
         phone,
+        gender,
+        state,
+        bio,
         displayName: fullName || undefined // Override Google name if custom name is provided
       });
       showToast('Signed in with Google successfully!');
@@ -155,6 +161,40 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Gender</label>
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium appearance-none"
+                  >
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">State</label>
+                  <input
+                    type="text"
+                    placeholder="Karnataka"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                    className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Bio</label>
+                <textarea
+                  placeholder="Tell us about yourself..."
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium h-20 resize-none"
                 />
               </div>
               <div className="p-3 bg-accent/5 rounded-xl border border-accent/10">

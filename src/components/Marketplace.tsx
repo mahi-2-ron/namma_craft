@@ -162,6 +162,15 @@ export const Marketplace = ({ onNavigate }: any) => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+
+  const toggleMaterial = (material: string) => {
+    setSelectedMaterials(prev =>
+      prev.includes(material)
+        ? prev.filter(m => m !== material)
+        : [...prev, material]
+    );
+  };
 
   const activeProducts = (activeTab === 'crafts' ? craftProducts : foodProducts).filter((p: any) => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -171,7 +180,12 @@ export const Marketplace = ({ onNavigate }: any) => {
 
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
 
-    return matchesSearch && matchesCategory && p.price <= priceRange;
+    const matchesMaterial = selectedMaterials.length === 0 ||
+      (activeTab === 'crafts'
+        ? selectedMaterials.some(m => p.material?.includes(m) || p.name.includes(m))
+        : selectedMaterials.some(m => p.tag === m));
+
+    return matchesSearch && matchesCategory && matchesMaterial && p.price <= priceRange;
   });
 
   const activeCategories = activeTab === 'crafts' ? craftCategories : foodCategories;
@@ -315,7 +329,12 @@ export const Marketplace = ({ onNavigate }: any) => {
                 <div className="grid grid-cols-1 gap-3">
                   {(activeTab === 'crafts' ? ['Clay', 'Teak Wood', 'Silk', 'Brass', 'Cotton'] : foodSpecialties).map(tag => (
                     <label key={tag} className="flex items-center gap-3 cursor-pointer group">
-                      <input type="checkbox" className="w-5 h-5 rounded border-2 border-primary/10 text-accent focus:ring-accent/20 transition-all" />
+                      <input
+                        type="checkbox"
+                        checked={selectedMaterials.includes(tag)}
+                        onChange={() => toggleMaterial(tag)}
+                        className="w-5 h-5 rounded border-2 border-primary/10 text-accent focus:ring-accent/20 transition-all cursor-pointer"
+                      />
                       <span className="text-[15px] text-text-soft group-hover:text-primary transition-colors font-medium">{tag}</span>
                     </label>
                   ))}

@@ -64,7 +64,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     role,
                     extraData.age,
                     extraData.location,
-                    extraData.phone
+                    extraData.phone,
+                    extraData.gender,
+                    extraData.bio,
+                    extraData.state
                 );
                 setUserProfile(profile);
             } catch (e) {
