@@ -212,9 +212,10 @@
   }
 }
 
-/* Mobile product grid */
+/* Removed forceful 1-column grid on mobile to allow responsive dual-column layouts */
 @media (max-width: 640px) {
-  .grid-cols-2 {
-    grid-template-columns: 1fr !important;
+  .grid-mobile-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
   }
 }
