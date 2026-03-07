@@ -92,15 +92,48 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
             </div>
           ) : (
             <div className="hidden sm:flex items-center relative group">
-
-              {/* Mobile menu toggle */}
-              <button
-                className="lg:hidden p-2 text-primary"
-                onClick={() => setMenuOpen(!menuOpen)}
-              >
-                {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
+              <div className="flex items-center gap-2 cursor-pointer bg-cream/50 hover:bg-cream rounded-full pl-1.5 pr-3 py-1.5 border border-highlight/20 transition-all">
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName || 'User'}
+                    className="w-7 h-7 rounded-full object-cover border border-accent/30"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center text-white font-bold text-xs">
+                    {user.displayName?.charAt(0) || 'U'}
+                  </div>
+                )}
+                <span className="text-xs font-bold text-primary truncate max-w-[80px]">
+                  {user.displayName?.split(' ')[0] || 'User'}
+                </span>
+              </div>
+              <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-xl shadow-premium border border-highlight/10 p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <button
+                  onClick={() => onNavigate('creator')}
+                  className="w-full text-left px-3 py-2 text-xs font-bold text-primary hover:bg-cream rounded-lg transition-colors"
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-lg transition-colors flex items-center gap-2"
+                >
+                  <LogOut className="w-3 h-3" /> Sign Out
+                </button>
+              </div>
             </div>
+          )}
+
+          {/* Mobile menu toggle */}
+          <button
+            className="lg:hidden p-2 text-primary"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
