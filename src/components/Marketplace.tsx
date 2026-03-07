@@ -162,7 +162,9 @@ export const Marketplace = ({ onNavigate }: any) => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedRegion, setSelectedRegion] = useState('All India');
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState('Popular');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -183,12 +185,18 @@ export const Marketplace = ({ onNavigate }: any) => {
 
     const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
 
+    const matchesRegion = selectedRegion === 'All India' || p.region.includes(selectedRegion.split(',')[0]);
+
     const matchesMaterial = selectedMaterials.length === 0 ||
       (activeTab === 'crafts'
         ? selectedMaterials.some(m => p.material?.includes(m) || p.name.includes(m))
         : selectedMaterials.some(m => p.tag === m));
 
-    return matchesSearch && matchesCategory && matchesMaterial && p.price <= priceRange;
+    return matchesSearch && matchesCategory && matchesRegion && matchesMaterial && p.price <= priceRange;
+  }).sort((a: any, b: any) => {
+    if (sortBy === 'Price: Low to High') return a.price - b.price;
+    if (sortBy === 'Price: High to Low') return b.price - a.price;
+    return 0; // Popular / Newest for now
   });
 
   const totalPages = Math.ceil(activeProducts.length / itemsPerPage);
@@ -263,11 +271,15 @@ export const Marketplace = ({ onNavigate }: any) => {
             </button>
 
             <div className="relative flex-1 lg:flex-none">
-              <select className="w-full appearance-none input-field !py-3 pl-6 pr-12 text-sm font-bold text-primary cursor-pointer !bg-white/60">
-                <option>Sort by: Popular</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest Arrivals</option>
+              <select
+                value={sortBy}
+                onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
+                className="w-full appearance-none input-field !py-3 pl-6 pr-12 text-sm font-bold text-primary cursor-pointer !bg-white/60 focus:outline-none"
+              >
+                <option value="Popular">Sort by: Popular</option>
+                <option value="Price: Low to High">Price: Low to High</option>
+                <option value="Price: High to Low">Price: High to Low</option>
+                <option value="Newest Arrivals">Newest Arrivals</option>
               </select>
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft pointer-events-none" />
             </div>
@@ -321,9 +333,13 @@ export const Marketplace = ({ onNavigate }: any) => {
               <div>
                 <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-6">Region</h4>
                 <div className="relative">
-                  <select className="w-full appearance-none input-field !py-3 pl-5 pr-12 text-sm font-bold text-primary cursor-pointer !bg-white/60">
+                  <select
+                    value={selectedRegion}
+                    onChange={(e) => { setSelectedRegion(e.target.value); setCurrentPage(1); }}
+                    className="w-full appearance-none input-field !py-3 pl-5 pr-12 text-sm font-bold text-primary cursor-pointer !bg-white/60 focus:outline-none"
+                  >
                     {regions.map(region => (
-                      <option key={region}>{region}</option>
+                      <option key={region} value={region}>{region}</option>
                     ))}
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft pointer-events-none" />
@@ -469,7 +485,13 @@ export const Marketplace = ({ onNavigate }: any) => {
                   <div className="space-y-3">
                     {activeCategories.map(cat => (
                       <label key={cat} className="flex items-center gap-3 cursor-pointer">
-                        <input type="radio" name="m-category" className="accent-accent w-5 h-5" defaultChecked={cat === 'All'} />
+                        <input
+                          type="radio"
+                          name="m-category"
+                          checked={selectedCategory === cat}
+                          onChange={() => { setSelectedCategory(cat); setCurrentPage(1); }}
+                          className="accent-accent w-5 h-5"
+                        />
                         <span className="text-text-soft font-medium">{cat}</span>
                       </label>
                     ))}
