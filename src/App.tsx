@@ -75,6 +75,10 @@ export default function App() {
     else navigate(`/${path}`);
   };
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar onNavigate={handleNavigate} currentPage={currentPath} />
