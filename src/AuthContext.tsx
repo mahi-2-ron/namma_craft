@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             try {
                 const profile = await saveUserProfile(
                     u.uid,
-                    u.displayName || '',
+                    extraData.displayName || u.displayName || '',
                     u.email || '',
                     u.photoURL || '',
                     role,

@@ -10,6 +10,7 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [role, setRole] = useState('buyer');
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [fullName, setFullName] = useState('');
   const [age, setAge] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,7 +33,12 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const handleGoogleSignIn = async () => {
     setIsSigningIn(true);
     try {
-      await signInWithGoogle(role, { age: age ? parseInt(age) : undefined, location, phone });
+      await signInWithGoogle(role, {
+        age: age ? parseInt(age) : undefined,
+        location,
+        phone,
+        displayName: fullName || undefined // Override Google name if custom name is provided
+      });
       showToast('Signed in with Google successfully!');
       // Navigation will happen via the useEffect above
     } catch (error: any) {
@@ -106,6 +112,19 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
 
           {!isLogin && (
             <div className="space-y-4 mb-6">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Full Name</label>
+                <div className="relative">
+                  <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
+                  <input
+                    type="text"
+                    placeholder="Arjun Sharma"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full pl-14 pr-6 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                  />
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Age</label>
