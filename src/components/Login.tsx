@@ -10,6 +10,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [role, setRole] = useState('buyer');
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [age, setAge] = useState('');
+  const [location, setLocation] = useState('');
+  const [phone, setPhone] = useState('');
 
   // Sync mode if it changes
   React.useEffect(() => {
@@ -29,7 +32,7 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const handleGoogleSignIn = async () => {
     setIsSigningIn(true);
     try {
-      await signInWithGoogle(role);
+      await signInWithGoogle(role, { age: age ? parseInt(age) : undefined, location, phone });
       showToast('Signed in with Google successfully!');
       // Navigation will happen via the useEffect above
     } catch (error: any) {
@@ -100,6 +103,49 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
               </button>
             ))}
           </div>
+
+          {!isLogin && (
+            <div className="space-y-4 mb-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Age</label>
+                  <input
+                    type="number"
+                    placeholder="25"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Phone</label>
+                  <input
+                    type="tel"
+                    placeholder="+91..."
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Location</label>
+                <input
+                  type="text"
+                  placeholder="Bangalore, India"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                />
+              </div>
+              <div className="p-3 bg-accent/5 rounded-xl border border-accent/10">
+                <p className="text-[10px] text-accent font-medium leading-tight">
+                  <ShieldCheck className="w-3 h-3 inline mr-1 mb-0.5" />
+                  This information helps us personalize your heritage experience.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Google Sign-In - Primary Action */}
           <button

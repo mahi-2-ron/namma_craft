@@ -12,7 +12,7 @@ interface AuthContextType {
     user: User | null;
     userProfile: any | null;
     loading: boolean;
-    signInWithGoogle: (role?: string) => Promise<void>;
+    signInWithGoogle: (role?: string, extraData?: any) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return () => unsubscribe();
     }, []);
 
-    const signInWithGoogle = async (role: string = 'buyer') => {
+    const signInWithGoogle = async (role: string = 'buyer', extraData: any = {}) => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const u = result.user;
@@ -61,7 +61,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     u.displayName || '',
                     u.email || '',
                     u.photoURL || '',
-                    role
+                    role,
+                    extraData.age,
+                    extraData.location,
+                    extraData.phone
                 );
                 setUserProfile(profile);
             } catch (e) {

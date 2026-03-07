@@ -32,15 +32,18 @@ mongoose.connect(MONGO_URI)
 // Save/update user after Google Sign-In
 app.post('/api/users', async (req, res) => {
     try {
-        const { firebaseUid, displayName, email, photoURL, role } = req.body;
+        const { firebaseUid, displayName, email, photoURL, role, age, location, phone } = req.body;
 
         let user = await UserModel.findOne({ firebaseUid });
         if (user) {
             user.displayName = displayName;
             user.photoURL = photoURL;
+            if (age) user.age = age;
+            if (location) user.location = location;
+            if (phone) user.phone = phone;
             await user.save();
         } else {
-            user = await UserModel.create({ firebaseUid, displayName, email, photoURL, role });
+            user = await UserModel.create({ firebaseUid, displayName, email, photoURL, role, age, location, phone });
         }
         res.json(user);
     } catch (error: any) {
