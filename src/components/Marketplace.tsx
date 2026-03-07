@@ -196,7 +196,13 @@ export const Marketplace = ({ onNavigate }: any) => {
   }).sort((a: any, b: any) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
-    return 0; // Popular / Newest for now
+    if (sortBy === 'Newest Arrivals') return b.id - a.id;
+    if (sortBy === 'Artisan (A-Z)') {
+      const nameA = (a.artisan || a.creator || '').toLowerCase();
+      const nameB = (b.artisan || b.creator || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    }
+    return 0; // Popular (Default order)
   });
 
   const totalPages = Math.ceil(activeProducts.length / itemsPerPage);
@@ -280,6 +286,7 @@ export const Marketplace = ({ onNavigate }: any) => {
                 <option value="Price: Low to High">Price: Low to High</option>
                 <option value="Price: High to Low">Price: High to Low</option>
                 <option value="Newest Arrivals">Newest Arrivals</option>
+                <option value="Artisan (A-Z)">Artisan (A-Z)</option>
               </select>
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft pointer-events-none" />
             </div>
