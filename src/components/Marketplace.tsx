@@ -487,6 +487,7 @@ export const Marketplace = ({ onNavigate }: any) => {
               </div>
 
               <div className="space-y-12">
+                {/* Mobile Category */}
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-6">Category</h4>
                   <div className="space-y-3">
@@ -497,16 +498,71 @@ export const Marketplace = ({ onNavigate }: any) => {
                           name="m-category"
                           checked={selectedCategory === cat}
                           onChange={() => { setSelectedCategory(cat); setCurrentPage(1); }}
-                          className="accent-accent w-5 h-5"
+                          className="accent-accent w-5 h-5 focus:ring-0"
                         />
                         <span className="text-text-soft font-medium">{cat}</span>
                       </label>
                     ))}
                   </div>
                 </div>
+
+                {/* Mobile Price Range */}
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-6">Price Range</h4>
+                  <input
+                    type="range"
+                    min="0"
+                    max={activeTab === 'crafts' ? 10000 : 2000}
+                    value={priceRange}
+                    onChange={(e) => { setPriceRange(parseInt(e.target.value)); setCurrentPage(1); }}
+                    className="w-full accent-accent h-1.5 bg-primary/5 rounded-full appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between mt-4 text-[10px] font-bold text-primary">
+                    <span>₹0</span>
+                    <span className="text-accent">₹{priceRange}</span>
+                  </div>
+                </div>
+
+                {/* Mobile Region */}
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-6">Region</h4>
+                  <div className="relative">
+                    <select
+                      value={selectedRegion}
+                      onChange={(e) => { setSelectedRegion(e.target.value); setCurrentPage(1); }}
+                      className="w-full appearance-none input-field !py-3 pl-5 pr-12 text-sm font-bold text-primary cursor-pointer !bg-white/60 focus:outline-none"
+                    >
+                      {regions.map(region => (
+                        <option key={region} value={region}>{region}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* Mobile Specialty / Materials */}
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-6">
+                    {activeTab === 'crafts' ? 'Material' : 'Specialty'}
+                  </h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {(activeTab === 'crafts' ? ['Clay', 'Teak Wood', 'Silk', 'Brass', 'Cotton'] : foodSpecialties).map(tag => (
+                      <label key={tag} className="flex items-center gap-3 cursor-pointer group">
+                        <input
+                          type="checkbox"
+                          checked={selectedMaterials.includes(tag)}
+                          onChange={() => toggleMaterial(tag)}
+                          className="w-5 h-5 rounded border-2 border-primary/10 text-accent focus:ring-accent/20 transition-all cursor-pointer"
+                        />
+                        <span className="text-[15px] text-text-soft group-hover:text-primary transition-colors font-medium">{tag}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
                 <button
                   onClick={() => setIsSidebarOpen(false)}
-                  className="w-full btn-primary"
+                  className="w-full btn-primary h-14"
                 >
                   Apply Filters
                 </button>
