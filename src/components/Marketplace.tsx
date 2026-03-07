@@ -163,8 +163,11 @@ export const Marketplace = ({ onNavigate }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const toggleMaterial = (material: string) => {
+    setCurrentPage(1); // Reset to first page when filtering
     setSelectedMaterials(prev =>
       prev.includes(material)
         ? prev.filter(m => m !== material)
@@ -188,6 +191,12 @@ export const Marketplace = ({ onNavigate }: any) => {
     return matchesSearch && matchesCategory && matchesMaterial && p.price <= priceRange;
   });
 
+  const totalPages = Math.ceil(activeProducts.length / itemsPerPage);
+  const paginatedProducts = activeProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const activeCategories = activeTab === 'crafts' ? craftCategories : foodCategories;
 
   return (
@@ -209,14 +218,14 @@ export const Marketplace = ({ onNavigate }: any) => {
           <div className="flex justify-center mb-12">
             <div className="bg-white/50 backdrop-blur-md p-1.5 rounded-[24px] border border-primary/5 flex gap-2">
               <button
-                onClick={() => { setActiveTab('crafts'); setSelectedCategory('All'); }}
+                onClick={() => { setActiveTab('crafts'); setSelectedCategory('All'); setCurrentPage(1); }}
                 className={`px-10 py-3 rounded-[20px] text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'crafts' ? 'bg-primary text-white shadow-lg' : 'text-text-soft hover:text-primary'
                   }`}
               >
                 Handmade Crafts
               </button>
               <button
-                onClick={() => { setActiveTab('foods'); setSelectedCategory('All'); }}
+                onClick={() => { setActiveTab('foods'); setSelectedCategory('All'); setCurrentPage(1); }}
                 className={`px-10 py-3 rounded-[20px] text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'foods' ? 'bg-primary text-white shadow-lg' : 'text-text-soft hover:text-primary'
                   }`}
               >
@@ -239,7 +248,7 @@ export const Marketplace = ({ onNavigate }: any) => {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
               placeholder={`Search by ${activeTab === 'crafts' ? 'craft' : 'food'}, region or creator...`}
               className="search-bar w-full pl-12 pr-6 !h-[50px] !bg-white/60"
             />
@@ -280,7 +289,7 @@ export const Marketplace = ({ onNavigate }: any) => {
                           type="radio"
                           name="category"
                           checked={selectedCategory === cat}
-                          onChange={() => setSelectedCategory(cat)}
+                          onChange={() => { setSelectedCategory(cat); setCurrentPage(1); }}
                           className="peer appearance-none w-5 h-5 rounded-full border-2 border-primary/10 checked:border-accent transition-all"
                         />
                         <div className="absolute w-2 h-2 rounded-full bg-accent opacity-0 peer-checked:opacity-100 transition-opacity" />
@@ -299,7 +308,7 @@ export const Marketplace = ({ onNavigate }: any) => {
                   min="0"
                   max={activeTab === 'crafts' ? 10000 : 2000}
                   value={priceRange}
-                  onChange={(e) => setPriceRange(parseInt(e.target.value))}
+                  onChange={(e) => { setPriceRange(parseInt(e.target.value)); setCurrentPage(1); }}
                   className="w-full accent-accent h-1.5 bg-primary/5 rounded-full appearance-none cursor-pointer"
                 />
                 <div className="flex justify-between mt-4 text-sm font-bold text-primary">
@@ -363,7 +372,7 @@ export const Marketplace = ({ onNavigate }: any) => {
           {/* Product Grid */}
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {activeProducts.map(product => (
+              {paginatedProducts.map(product => (
                 activeTab === 'crafts'
                   ? <ProductCard key={product.id} {...product} onNavigate={onNavigate} />
                   : <FoodCard key={product.id} {...product} onNavigate={onNavigate} />
@@ -371,20 +380,35 @@ export const Marketplace = ({ onNavigate }: any) => {
             </div>
 
             {/* Pagination */}
-            <div className="mt-20 flex justify-center items-center gap-4">
-              <button className="w-12 h-12 rounded-full flex items-center justify-center border border-primary/10 text-primary hover:bg-primary hover:text-white transition-all">←</button>
-              <div className="flex gap-2">
-                {[1, 2, 3].map(n => (
-                  <button
-                    key={n}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm transition-all ${n === 1 ? 'bg-primary text-white shadow-lg' : 'bg-white text-primary border border-primary/5 hover:border-accent'}`}
-                  >
-                    {n}
-                  </button>
-                ))}
+            {totalPages > 1 && (
+              <div className="mt-20 flex justify-center items-center gap-4">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="w-12 h-12 rounded-full flex items-center justify-center border border-primary/10 text-primary hover:bg-primary hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  ←
+                </button>
+                <div className="flex gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+                    <button
+                      key={n}
+                      onClick={() => setCurrentPage(n)}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm transition-all ${n === currentPage ? 'bg-primary text-white shadow-lg' : 'bg-white text-primary border border-primary/5 hover:border-accent'}`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="w-12 h-12 rounded-full flex items-center justify-center border border-primary/10 text-primary hover:bg-primary hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  →
+                </button>
               </div>
-              <button className="w-12 h-12 rounded-full flex items-center justify-center border border-primary/10 text-primary hover:bg-primary hover:text-white transition-all">→</button>
-            </div>
+            )}
           </div>
         </div>
       </div>
