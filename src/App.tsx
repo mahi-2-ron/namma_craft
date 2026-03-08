@@ -42,6 +42,7 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: ReactNode, allow
 
 // Lazy loaded components
 const Marketplace = React.lazy(() => import('./components/Marketplace').then(m => ({ default: m.Marketplace })));
+const BuyerDashboard = React.lazy(() => import('./components/BuyerDashboard').then(m => ({ default: m.BuyerDashboard })));
 const ArtisanProfile = React.lazy(() => import('./components/ArtisanProfile').then(m => ({ default: m.ArtisanProfile })));
 const ProductDetail = React.lazy(() => import('./components/ProductDetail').then(m => ({ default: m.ProductDetail })));
 const LiveAuction = React.lazy(() => import('./components/LiveAuction').then(m => ({ default: m.LiveAuction })));
@@ -121,6 +122,11 @@ export default function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/marketplace" element={<Marketplace onNavigate={handleNavigate} />} />
             <Route path="/artisan" element={<ArtisanProfile onNavigate={handleNavigate} />} />
+            <Route path="/buyer/dashboard" element={
+              <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
+                <BuyerDashboard onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
             <Route path="/admin" element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <AdminDashboard onNavigate={handleNavigate} />
