@@ -184,28 +184,48 @@ app.get('/api/products/artisan/:artisanId', async (req, res) => {
 });
 
 // Add a product (seller only)
-app.post('/api/products', authMiddleware, checkRole(['seller', 'admin']), async (req, res) => {
+app.post('/api/products', authMiddleware, checkRole(['seller', 'admin']), async (req: any, res: any) => {
     try {
-        const product = await ProductModel.create(req.body);
+        const productData = {
+            ...req.body,
+            artisanId: req.user.firebaseUid,
+            artisan: req.user.displayName
+        };
+        const product = await ProductModel.create(productData);
         res.status(201).json(product);
     } catch (error: any) {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-// Update a product (seller only)
-app.put('/api/products/:id', authMiddleware, checkRole(['seller', 'admin']), async (req, res) => {
+// Update a product (seller only - must own it)
+app.put('/api/products/:id', authMiddleware, checkRole(['seller', 'admin']), async (req: any, res: any) => {
     try {
-        const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(product);
+        const product = await ProductModel.findById(req.params.id);
+        if (!product) return res.status(404).json({ error: 'Product not found' });
+
+        // Only owner or admin can update
+        if (product.artisanId !== req.user.firebaseUid && req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Forbidden: You do not own this product' });
+        }
+
+        const updatedProduct = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedProduct);
     } catch (error: any) {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
-// Delete a product (seller only)
-app.delete('/api/products/:id', authMiddleware, checkRole(['seller', 'admin']), async (req, res) => {
+// Delete a product (seller only - must own it)
+app.delete('/api/products/:id', authMiddleware, checkRole(['seller', 'admin']), async (req: any, res: any) => {
     try {
+        const product = await ProductModel.findById(req.params.id);
+        if (!product) return res.status(404).json({ error: 'Product not found' });
+
+        if (product.artisanId !== req.user.firebaseUid && req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Forbidden: You do not own this product' });
+        }
+
         await ProductModel.findByIdAndDelete(req.params.id);
         res.json({ message: 'Product deleted' });
     } catch (error: any) {
@@ -228,9 +248,22 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
 });
 
 // Get orders by user
-app.get('/api/orders/user/:userId', authMiddleware, checkOwnership('userId'), async (req, res) => {
+app.get('/api/orders/user/:userId', authMiddleware, checkOwnership('userId'), async (req: any, res: any) => {
     try {
         const orders = await OrderModel.find({ buyerId: req.params.userId }).sort({ createdAt: -1 });
+        res.json(orders);
+    } catch (error: any) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Get orders for seller products
+app.get('/api/orders/seller/:sellerId', authMiddleware, checkOwnership('sellerId'), async (req: any, res: any) => {
+    try {
+        // Find orders that contain at least one item from this seller
+        const orders = await OrderModel.find({
+            'items.sellerId': req.params.sellerId
+        }).sort({ createdAt: -1 });
         res.json(orders);
     } catch (error: any) {
         res.status(500).json({ error: 'Internal server error' });

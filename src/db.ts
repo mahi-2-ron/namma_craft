@@ -1,5 +1,15 @@
-// Frontend API service — calls the Express + MongoDB backend
+import { auth } from './firebase';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+const getHeaders = async () => {
+    const user = auth.currentUser;
+    const token = user ? await user.getIdToken() : '';
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    };
+};
 
 // ============================================
 // USER
@@ -29,6 +39,11 @@ export const getProducts = async () => {
     return res.json();
 };
 
+export const getProductsByArtisan = async (artisanId: string) => {
+    const res = await fetch(`${API_URL}/products/artisan/${artisanId}`);
+    return res.json();
+};
+
 export const getProduct = async (id: string) => {
     const res = await fetch(`${API_URL}/products/${id}`);
     return res.json();
@@ -37,14 +52,26 @@ export const getProduct = async (id: string) => {
 export const addProduct = async (product: any) => {
     const res = await fetch(`${API_URL}/products`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getHeaders(),
+        body: JSON.stringify(product),
+    });
+    return res.json();
+};
+
+export const updateProduct = async (id: string, product: any) => {
+    const res = await fetch(`${API_URL}/products/${id}`, {
+        method: 'PUT',
+        headers: await getHeaders(),
         body: JSON.stringify(product),
     });
     return res.json();
 };
 
 export const deleteProduct = async (id: string) => {
-    const res = await fetch(`${API_URL}/products/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/products/${id}`, {
+        method: 'DELETE',
+        headers: await getHeaders()
+    });
     return res.json();
 };
 
@@ -55,14 +82,23 @@ export const deleteProduct = async (id: string) => {
 export const placeOrder = async (order: any) => {
     const res = await fetch(`${API_URL}/orders`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getHeaders(),
         body: JSON.stringify(order),
     });
     return res.json();
 };
 
 export const getOrdersByUser = async (userId: string) => {
-    const res = await fetch(`${API_URL}/orders/user/${userId}`);
+    const res = await fetch(`${API_URL}/orders/user/${userId}`, {
+        headers: await getHeaders()
+    });
+    return res.json();
+};
+
+export const getOrdersBySeller = async (sellerId: string) => {
+    const res = await fetch(`${API_URL}/orders/seller/${sellerId}`, {
+        headers: await getHeaders()
+    });
     return res.json();
 };
 
