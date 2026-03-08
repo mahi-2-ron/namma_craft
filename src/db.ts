@@ -1,5 +1,5 @@
 // Frontend API service — calls the Express + MongoDB backend
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // ============================================
 // USER
@@ -120,5 +120,26 @@ export const clearCart = async (userId: string) => {
 // Health check
 export const checkHealth = async () => {
     const res = await fetch(`${API_URL}/health`);
+    return res.json();
+};
+
+// ============================================
+// CHAT
+// ============================================
+export const sendChatMessage = async (messages: any[], systemInstruction: string) => {
+    const res = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, systemInstruction }),
+    });
+    return res.json();
+};
+
+export const processVoiceInput = async (text: string) => {
+    const res = await fetch(`${API_URL}/voice-process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+    });
     return res.json();
 };

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { GoogleGenAI, Type } from '@google/genai';
 
 import { UserModel } from './models/User';
 import { ProductModel } from './models/Product';
@@ -12,7 +13,11 @@ import { CartModel } from './models/Cart';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://nammacraft.netlify.app'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true,
+}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
@@ -255,6 +260,73 @@ app.delete('/api/cart/:userId', async (req, res) => {
     try {
         await CartModel.deleteMany({ userId: req.params.userId });
         res.json({ message: 'Cart cleared' });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ============================================
+// CHAT ROUTE
+// ============================================
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { messages, systemInstruction } = req.body;
+        if (!messages || !Array.isArray(messages)) {
+            return res.status(400).json({ error: 'Invalid messages format' });
+        }
+
+        // Limit history to last 10 messages
+        const recentMessages = messages.slice(-10);
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: recentMessages,
+            config: {
+                systemInstruction: systemInstruction,
+            },
+        });
+
+        res.json({ text: response.text });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ============================================
+// VOICE PROCESS ROUTE
+// ============================================
+app.post('/api/voice-process', async (req, res) => {
+    try {
+        const { text } = req.body;
+        if (!text) return res.status(400).json({ error: 'Text is required' });
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: `Extract product details from this voice description: "${text}". 
+            Return a JSON object with: name, category (one of: Pottery, Textiles, Woodwork, Jewelry, Paintings), origin, startPrice (number), duration (e.g. "3 days"), craftStory.
+            If a field is missing, provide a reasonable default based on the context.`,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.OBJECT,
+                    properties: {
+                        name: { type: Type.STRING },
+                        category: { type: Type.STRING },
+                        origin: { type: Type.STRING },
+                        startPrice: { type: Type.NUMBER },
+                        duration: { type: Type.STRING },
+                        craftStory: { type: Type.STRING },
+                        language: { type: Type.STRING, description: "Detected language" }
+                    },
+                    required: ["name", "category", "origin", "startPrice", "duration", "craftStory"]
+                }
+            }
+        });
+
+        const data = JSON.parse(response.text || '{}');
+        res.json(data);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }

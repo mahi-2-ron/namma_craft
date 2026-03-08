@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mic, MicOff, Sparkles, RefreshCw, Check, X, Languages, Volume2 } from 'lucide-react';
-import { GoogleGenAI, Type } from "@google/genai";
+import { processVoiceInput } from '../db';
 
 interface VoiceAssistantProps {
   onDataExtracted: (data: any) => void;
@@ -19,7 +19,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
     setIsListening(true);
     setError(null);
     setExtractedData(null);
-    
+
     // In a real app, we'd use Web Speech API or record audio
     // For this demo, we'll simulate a transcript after 3 seconds
     setTimeout(() => {
@@ -38,31 +38,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
   const processWithAI = async (text: string) => {
     setIsProcessing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Extract product details from this voice description: "${text}". 
-        Return a JSON object with: name, category (one of: Pottery, Textiles, Woodwork, Jewelry, Paintings), origin, startPrice (number), duration (e.g. "3 days"), craftStory.
-        If a field is missing, provide a reasonable default based on the context.`,
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              name: { type: Type.STRING },
-              category: { type: Type.STRING },
-              origin: { type: Type.STRING },
-              startPrice: { type: Type.NUMBER },
-              duration: { type: Type.STRING },
-              craftStory: { type: Type.STRING },
-              language: { type: Type.STRING, description: "Detected language" }
-            },
-            required: ["name", "category", "origin", "startPrice", "duration", "craftStory"]
-          }
-        }
-      });
-
-      const data = JSON.parse(response.text || '{}');
+      const data = await processVoiceInput(text);
       setExtractedData(data);
     } catch (err) {
       console.error("AI Processing Error:", err);
@@ -81,7 +57,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
   return (
     <div className="bg-white rounded-[40px] p-10 border border-accent/20 shadow-premium relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-2 bg-accent" />
-      
+
       <div className="flex flex-col items-center text-center space-y-8">
         <div className="space-y-2">
           <div className="flex items-center justify-center gap-2 text-accent mb-2">
@@ -104,7 +80,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 className="flex flex-col items-center"
               >
                 <div className="relative">
-                  <motion.div 
+                  <motion.div
                     animate={{ scale: [1, 1.5, 1] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                     className="absolute inset-0 bg-accent/20 rounded-full"
@@ -135,7 +111,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 animate={{ opacity: 1 }}
                 className="flex flex-col items-center"
               >
-                <button 
+                <button
                   onClick={startListening}
                   className="w-24 h-24 bg-cream border-4 border-accent/20 text-accent rounded-full flex items-center justify-center shadow-xl hover:bg-accent hover:text-white transition-all group"
                 >
@@ -148,7 +124,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
         </div>
 
         {transcript && !isProcessing && !extractedData && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-cream/50 p-6 rounded-3xl border border-highlight/20 max-w-lg w-full"
@@ -162,7 +138,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
         )}
 
         {extractedData && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="w-full space-y-6"
@@ -179,7 +155,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                   </div>
                 )}
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest mb-1">Product Name</p>
@@ -198,7 +174,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                   <p className="text-sm font-bold text-accent">₹{extractedData.startPrice}</p>
                 </div>
               </div>
-              
+
               <div className="mt-4 pt-4 border-t border-emerald-100">
                 <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest mb-1">Extracted Story</p>
                 <p className="text-xs text-primary line-clamp-2 leading-relaxed">{extractedData.craftStory}</p>
@@ -206,13 +182,13 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
             </div>
 
             <div className="flex gap-4">
-              <button 
+              <button
                 onClick={() => setExtractedData(null)}
                 className="flex-1 py-4 bg-white border-2 border-primary/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest text-text-soft hover:bg-primary/5 transition-all flex items-center justify-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" /> Try Again
               </button>
-              <button 
+              <button
                 onClick={handleConfirm}
                 className="flex-1 py-4 bg-primary text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary-light transition-all flex items-center justify-center gap-2"
               >
@@ -223,7 +199,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
         )}
 
         {error && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="flex items-center gap-2 text-rose-500 text-xs font-bold"

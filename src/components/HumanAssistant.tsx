@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Sparkles, User, Bot, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GoogleGenAI } from "@google/genai";
+import { sendChatMessage } from '../db';
 import { HandwrittenNote } from './HandwrittenNote';
 
 const SYSTEM_INSTRUCTION = `You are Aarav, a warm, enthusiastic, and deeply knowledgeable craft curator for NammaCraft. 
@@ -38,17 +38,12 @@ export function HumanAssistant() {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: messages.concat({ role: 'user', content: userMessage }).map(m => ({
-          role: m.role === 'user' ? 'user' : 'model',
-          parts: [{ text: m.content }]
-        })),
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-        },
-      });
+      const formattedMessages = messages.concat({ role: 'user', content: userMessage }).map(m => ({
+        role: m.role === 'user' ? 'user' : 'model',
+        parts: [{ text: m.content }]
+      }));
+
+      const response = await sendChatMessage(formattedMessages, SYSTEM_INSTRUCTION);
 
       const assistantMessage = response.text || "I'm sorry, I'm having a little trouble connecting right now. But I'm still here to help!";
       setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
@@ -95,11 +90,10 @@ export function HumanAssistant() {
               </div>
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${
-                    m.role === 'user' 
-                      ? 'bg-primary text-white rounded-tr-none' 
+                  <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${m.role === 'user'
+                      ? 'bg-primary text-white rounded-tr-none'
                       : 'bg-white text-text shadow-sm border border-primary/5 rounded-tl-none'
-                  }`}>
+                    }`}>
                     {m.content}
                   </div>
                 </div>
@@ -126,7 +120,7 @@ export function HumanAssistant() {
                   placeholder="Ask me about our crafts..."
                   className="w-full pl-4 pr-12 py-3 bg-cream/50 rounded-xl border-none focus:ring-2 focus:ring-accent/20 outline-none text-sm"
                 />
-                <button 
+                <button
                   onClick={handleSend}
                   disabled={isLoading || !input.trim()}
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-primary hover:text-accent disabled:opacity-30 transition-colors"
