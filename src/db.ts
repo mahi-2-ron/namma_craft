@@ -1,6 +1,12 @@
 import { auth } from './firebase';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+if (typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname !== '127.0.0.1' &&
+    API_URL.includes('localhost')) {
+    console.warn("⚠️ Warning: Your frontend is hosted at " + window.location.hostname + " but is trying to connect to a backend on localhost. This will likely fail in production. Set VITE_API_URL to your deployed backend URL.");
+}
 
 const getHeaders = async () => {
     const user = auth.currentUser;
