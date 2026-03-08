@@ -66,6 +66,15 @@ const checkRole = (allowedRoles: string[]) => {
     };
 };
 
+const checkOwnership = (userIdParam: string) => {
+    return (req: any, res: any, next: any) => {
+        if (!req.user || (req.user.firebaseUid !== req.params[userIdParam] && req.user.role !== 'admin')) {
+            return res.status(403).json({ error: 'Forbidden: You do not own this resource' });
+        }
+        next();
+    };
+};
+
 // ============================================
 // CONNECT TO MONGODB
 // ============================================
@@ -219,7 +228,7 @@ app.post('/api/orders', authMiddleware, async (req, res) => {
 });
 
 // Get orders by user
-app.get('/api/orders/user/:userId', authMiddleware, async (req, res) => {
+app.get('/api/orders/user/:userId', authMiddleware, checkOwnership('userId'), async (req, res) => {
     try {
         const orders = await OrderModel.find({ buyerId: req.params.userId }).sort({ createdAt: -1 });
         res.json(orders);

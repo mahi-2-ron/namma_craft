@@ -6,6 +6,7 @@ const orderSchema = new mongoose.Schema({
     buyerEmail: { type: String, required: true },
     items: [{
         productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+        sellerId: { type: String, required: true },
         name: String,
         price: Number,
         quantity: Number,

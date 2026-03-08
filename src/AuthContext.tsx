@@ -12,7 +12,8 @@ interface AuthContextType {
     user: User | null;
     userProfile: any | null;
     loading: boolean;
-    signInWithGoogle: (role?: string, extraData?: any) => Promise<void>;
+    signInWithGoogle: (role?: string, extraData?: any) => Promise<any>;
+    updateProfile: (extraData: any) => Promise<any>;
     logout: () => Promise<void>;
 }
 
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextType>({
     userProfile: null,
     loading: true,
     signInWithGoogle: async () => { },
+    updateProfile: async () => { },
     logout: async () => { },
 });
 
@@ -81,6 +83,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateProfile = async (extraData: any = {}) => {
+        if (!user || !userProfile) return null;
+        try {
+            const profile = await saveUserProfile(
+                user.uid,
+                extraData.displayName || userProfile.displayName || '',
+                userProfile.email || '',
+                userProfile.photoURL || '',
+                userProfile.role,
+                extraData.age,
+                extraData.location,
+                extraData.phone,
+                extraData.gender,
+                extraData.bio,
+                extraData.state
+            );
+            setUserProfile(profile);
+            return profile;
+        } catch (e) {
+            console.error('Update Profile Error:', e);
+            throw e;
+        }
+    };
+
     const logout = async () => {
         try {
             await signOut(auth);
@@ -92,7 +118,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, userProfile, loading, signInWithGoogle, logout }}>
+        <AuthContext.Provider value={{ user, userProfile, loading, signInWithGoogle, updateProfile, logout }}>
             {children}
         </AuthContext.Provider>
     );
