@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
+import rateLimit from 'express-rate-limit';
 
 import { UserModel } from './models/User';
 import { ProductModel } from './models/Product';
@@ -13,6 +14,14 @@ import { CartModel } from './models/Cart';
 dotenv.config();
 
 const app = express();
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // 100 requests per IP
+});
+
+app.use(limiter);
+
 app.use(cors({
     origin: ['http://localhost:3000', 'https://nammacraft.netlify.app'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -39,10 +48,17 @@ app.post('/api/users', async (req, res) => {
     try {
         const { firebaseUid, displayName, email, photoURL, role, age, location, phone, gender, bio, state } = req.body;
 
+        // Prevent role escalation to admin
+        const safeRole = (role === 'seller' || role === 'buyer') ? role : 'buyer';
+
         let user = await UserModel.findOne({ firebaseUid });
         if (user) {
             user.displayName = displayName;
             user.photoURL = photoURL;
+            // Admin role should not be updated from client request
+            if (user.role !== 'admin') {
+                user.role = safeRole;
+            }
             if (age) user.age = age;
             if (location) user.location = location;
             if (phone) user.phone = phone;
@@ -51,11 +67,11 @@ app.post('/api/users', async (req, res) => {
             if (state) user.state = state;
             await user.save();
         } else {
-            user = await UserModel.create({ firebaseUid, displayName, email, photoURL, role, age, location, phone, gender, bio, state });
+            user = await UserModel.create({ firebaseUid, displayName, email, photoURL, role: safeRole, age, location, phone, gender, bio, state });
         }
         res.json(user);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -66,7 +82,7 @@ app.get('/api/users/:uid', async (req, res) => {
         if (!user) return res.status(404).json({ error: 'User not found' });
         res.json(user);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -80,7 +96,7 @@ app.get('/api/products', async (req, res) => {
         const products = await ProductModel.find().sort({ createdAt: -1 }).limit(50);
         res.json(products);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -91,7 +107,7 @@ app.get('/api/products/:id', async (req, res) => {
         if (!product) return res.status(404).json({ error: 'Product not found' });
         res.json(product);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -101,7 +117,7 @@ app.get('/api/products/artisan/:artisanId', async (req, res) => {
         const products = await ProductModel.find({ artisanId: req.params.artisanId });
         res.json(products);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -111,7 +127,7 @@ app.post('/api/products', async (req, res) => {
         const product = await ProductModel.create(req.body);
         res.status(201).json(product);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -121,7 +137,7 @@ app.put('/api/products/:id', async (req, res) => {
         const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json(product);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -131,7 +147,7 @@ app.delete('/api/products/:id', async (req, res) => {
         await ProductModel.findByIdAndDelete(req.params.id);
         res.json({ message: 'Product deleted' });
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -145,7 +161,7 @@ app.post('/api/orders', async (req, res) => {
         const order = await OrderModel.create(req.body);
         res.status(201).json(order);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -155,7 +171,7 @@ app.get('/api/orders/user/:userId', async (req, res) => {
         const orders = await OrderModel.find({ buyerId: req.params.userId }).sort({ createdAt: -1 });
         res.json(orders);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -169,7 +185,7 @@ app.patch('/api/orders/:id/status', async (req, res) => {
         );
         res.json(order);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -186,7 +202,7 @@ app.post('/api/favorites', async (req, res) => {
         if (error.code === 11000) {
             return res.status(200).json({ message: 'Already in favorites' });
         }
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -199,7 +215,7 @@ app.delete('/api/favorites/:userId/:productId', async (req, res) => {
         });
         res.json({ message: 'Removed from favorites' });
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -209,7 +225,7 @@ app.get('/api/favorites/:userId', async (req, res) => {
         const favs = await FavoriteModel.find({ userId: req.params.userId });
         res.json(favs);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -228,7 +244,7 @@ app.post('/api/cart', async (req, res) => {
         );
         res.json(item);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -238,7 +254,7 @@ app.get('/api/cart/:userId', async (req, res) => {
         const items = await CartModel.find({ userId: req.params.userId });
         res.json(items);
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -251,7 +267,7 @@ app.delete('/api/cart/:userId/:productId', async (req, res) => {
         });
         res.json({ message: 'Removed from cart' });
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -261,7 +277,7 @@ app.delete('/api/cart/:userId', async (req, res) => {
         await CartModel.deleteMany({ userId: req.params.userId });
         res.json({ message: 'Cart cleared' });
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

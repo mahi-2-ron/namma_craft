@@ -30,6 +30,7 @@ import { SellProduct } from './components/SellProduct';
 import { LiveStudio } from './components/LiveStudio';
 import { HumanAssistant } from './components/HumanAssistant';
 import { Footer } from './components/Footer';
+import { NotFound } from './components/NotFound';
 
 function Home() {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ export default function App() {
           <Route path="/festival-home" element={<FestivalHome onNavigate={handleNavigate} />} />
           <Route path="/product/:id" element={<ProductDetail onNavigate={handleNavigate} />} />
           {/* Default fallback */}
-          <Route path="*" element={<ProductDetail onNavigate={handleNavigate} />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer onNavigate={handleNavigate} />

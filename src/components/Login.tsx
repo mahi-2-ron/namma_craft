@@ -104,7 +104,7 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
 
           {/* Role Selector */}
           <div className="flex bg-cream/50 p-1.5 rounded-2xl mb-8">
-            {['buyer', 'seller', 'admin'].map((r) => (
+            {['buyer', 'seller'].map((r) => (
               <button
                 key={r}
                 onClick={() => setRole(r)}
