@@ -6,7 +6,7 @@ import { useAuth } from '../AuthContext';
 
 export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   const { showToast } = useToast();
-  const { user, signInWithGoogle, loading } = useAuth();
+  const { user, userProfile, signInWithGoogle, loading } = useAuth();
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [role, setRole] = useState('buyer');
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -23,30 +23,36 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
     setIsLogin(initialMode === 'login');
   }, [initialMode]);
 
-  // If user is already authenticated, redirect
+  // Redirect if user profile is loaded
   React.useEffect(() => {
-    if (user) {
-      showToast(`Welcome back, ${user.displayName || 'User'}!`);
-      if (role === 'admin') onNavigate('admin');
-      else if (role === 'seller') onNavigate('creator');
-      else onNavigate('home');
+    if (user && userProfile) {
+      const uRole = userProfile.role || 'buyer';
+      if (uRole === 'admin') onNavigate('admin');
+      else if (uRole === 'seller') onNavigate('creator');
+      else onNavigate('marketplace'); // Redirect buyer to marketplace/dashboard
     }
-  }, [user]);
+  }, [user, userProfile]);
 
   const handleGoogleSignIn = async () => {
     setIsSigningIn(true);
     try {
-      await signInWithGoogle(role, {
+      const profile = await signInWithGoogle(role, {
         age: age ? parseInt(age) : undefined,
         location,
         phone,
         gender,
         state,
         bio,
-        displayName: fullName || undefined // Override Google name if custom name is provided
+        displayName: fullName || undefined
       });
-      showToast('Signed in with Google successfully!');
-      // Navigation will happen via the useEffect above
+
+      if (profile) {
+        const uRole = profile.role || 'buyer';
+        showToast(`Welcome ${uRole === 'seller' ? 'Artisan' : 'Collector'}, ${profile.displayName}!`);
+        if (uRole === 'admin') onNavigate('admin');
+        else if (uRole === 'seller') onNavigate('creator');
+        else onNavigate('marketplace');
+      }
     } catch (error: any) {
       if (error.code === 'auth/popup-closed-by-user') {
         showToast('Sign-in cancelled', 'info');

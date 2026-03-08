@@ -111,7 +111,12 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
               </div>
               <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-xl shadow-premium border border-highlight/10 p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <button
-                  onClick={() => onNavigate('creator')}
+                  onClick={() => {
+                    const uRole = (useAuth() as any).userProfile?.role;
+                    if (uRole === 'admin') onNavigate('admin');
+                    else if (uRole === 'seller') onNavigate('creator');
+                    else onNavigate('marketplace');
+                  }}
                   className="w-full text-left px-3 py-2 text-xs font-bold text-primary hover:bg-cream rounded-lg transition-colors"
                 >
                   Dashboard

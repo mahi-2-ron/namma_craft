@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Sparkles, ChevronRight } from 'lucide-react';
 import { Suspense } from 'react';
@@ -19,6 +19,26 @@ import { LiveStudio } from './components/LiveStudio';
 import { HumanAssistant } from './components/HumanAssistant';
 import { Footer } from './components/Footer';
 import { NotFound } from './components/NotFound';
+import { useAuth } from './AuthContext';
+
+const ProtectedRoute = ({ children, allowedRoles }: { children: ReactNode, allowedRoles: string[] }) => {
+  const { userProfile, loading } = useAuth();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!loading && (!userProfile || !allowedRoles.includes(userProfile.role))) {
+      navigate('/login');
+    }
+  }, [userProfile, loading, navigate]);
+
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-[50vh]">
+      <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
+  return userProfile && allowedRoles.includes(userProfile.role) ? <>{children}</> : null;
+};
 
 // Lazy loaded components
 const Marketplace = React.lazy(() => import('./components/Marketplace').then(m => ({ default: m.Marketplace })));
@@ -101,17 +121,41 @@ export default function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/marketplace" element={<Marketplace onNavigate={handleNavigate} />} />
             <Route path="/artisan" element={<ArtisanProfile onNavigate={handleNavigate} />} />
-            <Route path="/admin" element={<AdminDashboard onNavigate={handleNavigate} />} />
-            <Route path="/creator" element={<CreatorDashboard onNavigate={handleNavigate} />} />
-            <Route path="/sell-product" element={<SellProduct onNavigate={handleNavigate} />} />
+            <Route path="/admin" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminDashboard onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
+            <Route path="/creator" element={
+              <ProtectedRoute allowedRoles={['seller', 'admin']}>
+                <CreatorDashboard onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
+            <Route path="/sell-product" element={
+              <ProtectedRoute allowedRoles={['seller', 'admin']}>
+                <SellProduct onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
             <Route path="/auction-listing" element={<AuctionListing onNavigate={handleNavigate} />} />
             <Route path="/auction" element={<LiveAuction onNavigate={handleNavigate} />} />
-            <Route path="/create-auction" element={<CreateAuction onNavigate={handleNavigate} />} />
+            <Route path="/create-auction" element={
+              <ProtectedRoute allowedRoles={['seller', 'admin']}>
+                <CreateAuction onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
             <Route path="/login" element={<Login onNavigate={handleNavigate} initialMode="login" />} />
             <Route path="/signup" element={<Login onNavigate={handleNavigate} initialMode="signup" />} />
-            <Route path="/checkout" element={<Checkout onNavigate={handleNavigate} />} />
+            <Route path="/checkout" element={
+              <ProtectedRoute allowedRoles={['buyer', 'seller', 'admin']}>
+                <Checkout onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
             <Route path="/food-detail" element={<FoodDetail onNavigate={handleNavigate} />} />
-            <Route path="/add-food" element={<AddFoodItem onNavigate={handleNavigate} />} />
+            <Route path="/add-food" element={
+              <ProtectedRoute allowedRoles={['seller', 'admin']}>
+                <AddFoodItem onNavigate={handleNavigate} />
+              </ProtectedRoute>
+            } />
             <Route path="/discovery" element={<CulturalDiscovery onNavigate={handleNavigate} />} />
             <Route path="/festival-home" element={<FestivalHome onNavigate={handleNavigate} />} />
             <Route path="/product/:id" element={<ProductDetail onNavigate={handleNavigate} />} />

@@ -70,8 +70,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     extraData.state
                 );
                 setUserProfile(profile);
+                return profile; // Return profile for redirection logic
             } catch (e) {
                 console.log('Backend not available, using Firebase auth only');
+                return null;
             }
         } catch (error: any) {
             console.error('Google Sign-In Error:', error);
