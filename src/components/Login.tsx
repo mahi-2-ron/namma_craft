@@ -116,10 +116,11 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
           {!isLogin && (
             <div className="space-y-4 mb-6">
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Full Name</label>
+                <label htmlFor="full-name" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
                   <input
+                    id="full-name"
                     type="text"
                     placeholder="Arjun Sharma"
                     value={fullName}
@@ -130,8 +131,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Age</label>
+                  <label htmlFor="age" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Age</label>
                   <input
+                    id="age"
                     type="number"
                     placeholder="25"
                     value={age}
@@ -140,8 +142,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Phone</label>
+                  <label htmlFor="phone" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Phone</label>
                   <input
+                    id="phone"
                     type="tel"
                     placeholder="+91..."
                     value={phone}
@@ -151,8 +154,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Location</label>
+                <label htmlFor="location" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Location</label>
                 <input
+                  id="location"
                   type="text"
                   placeholder="Bangalore, India"
                   value={location}
@@ -162,8 +166,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Gender</label>
+                  <label htmlFor="gender" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Gender</label>
                   <select
+                    id="gender"
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                     className="w-full px-5 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium appearance-none"
@@ -175,8 +180,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">State</label>
+                  <label htmlFor="state" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">State</label>
                   <input
+                    id="state"
                     type="text"
                     placeholder="Karnataka"
                     value={state}
@@ -186,8 +192,9 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Bio</label>
+                <label htmlFor="bio" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Bio</label>
                 <textarea
+                  id="bio"
                   placeholder="Tell us about yourself..."
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
