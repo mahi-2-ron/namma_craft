@@ -4,7 +4,7 @@ import { useAuth } from '../AuthContext';
 import { useToast } from '../ToastContext';
 
 export const Navbar = ({ onNavigate, currentPage }: any) => {
-  const { user, logout } = useAuth();
+  const { user, userProfile, logout } = useAuth();
   const { showToast } = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -112,7 +112,7 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
               <div className="absolute top-full right-0 mt-1 w-40 bg-white rounded-xl shadow-premium border border-highlight/10 p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <button
                   onClick={() => {
-                    const uRole = (useAuth() as any).userProfile?.role;
+                    const uRole = userProfile?.role;
                     if (uRole === 'admin') onNavigate('admin');
                     else if (uRole === 'seller') onNavigate('creator');
                     else onNavigate('buyer/dashboard');
@@ -130,6 +130,7 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
               </div>
             </div>
           )}
+
 
           {/* Mobile menu toggle */}
           <button
