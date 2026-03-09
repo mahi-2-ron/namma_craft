@@ -26,6 +26,11 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
   // Redirect if user profile is loaded
   React.useEffect(() => {
     if (user && userProfile) {
+      // Don't redirect if it's an error object
+      if (userProfile.error) {
+        console.error('User profile has error, staying on login page');
+        return;
+      }
       const uRole = userProfile.role || 'buyer';
       if (uRole === 'admin') onNavigate('admin');
       else if (uRole === 'seller') onNavigate('creator');
@@ -47,6 +52,10 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
       });
 
       if (profile) {
+        if (profile.error) {
+          showToast(`Profile access failed: ${profile.error}`, 'error');
+          return;
+        }
         const uRole = profile.role || 'buyer';
         showToast(`Welcome ${uRole === 'seller' ? 'Artisan' : 'Collector'}, ${profile.displayName}!`);
         if (uRole === 'admin') onNavigate('admin');

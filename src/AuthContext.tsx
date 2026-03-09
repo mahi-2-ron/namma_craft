@@ -72,26 +72,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const result = await signInWithPopup(auth, googleProvider);
             const u = result.user;
             // Save user to MongoDB via backend API
-            try {
-                const profile = await saveUserProfile(
-                    u.uid,
-                    extraData.displayName || u.displayName || '',
-                    u.email || '',
-                    u.photoURL || '',
-                    role,
-                    extraData.age,
-                    extraData.location,
-                    extraData.phone,
-                    extraData.gender,
-                    extraData.bio,
-                    extraData.state
-                );
+            const profile = await saveUserProfile(
+                u.uid,
+                extraData.displayName || u.displayName || '',
+                u.email || '',
+                u.photoURL || '',
+                role,
+                extraData.age,
+                extraData.location,
+                extraData.phone,
+                extraData.gender,
+                extraData.bio,
+                extraData.state
+            );
+
+            // Check if profile has error from backend
+            if (profile && (profile.error || profile.message === 'Internal server error')) {
+                console.error('Backend returned profile error:', profile);
+                // Even with error, we set the profile state so component can decide what to do
                 setUserProfile(profile);
-                return profile; // Return profile for redirection logic
-            } catch (e) {
-                console.log('Backend not available, using Firebase auth only');
-                return null;
+                return profile;
             }
+
+            setUserProfile(profile);
+            return profile;
         } catch (error: any) {
             console.error('Google Sign-In Error:', error);
             throw error;
