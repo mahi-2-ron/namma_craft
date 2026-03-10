@@ -96,9 +96,13 @@ function Home() {
   );
 }
 
-export default function App() {
+import { CartProvider, useCart } from './CartContext';
+import { CartSidebar } from './components/CartSidebar';
+
+const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { cartItems, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity } = useCart();
 
   // Helper for components that still expect 'currentPage' or 'onNavigate'
   const currentPath = location.pathname.slice(1) || 'home';
@@ -171,6 +175,22 @@ export default function App() {
       </main>
       <Footer onNavigate={handleNavigate} />
       <HumanAssistant />
+      <CartSidebar
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onUpdateQuantity={updateQuantity}
+        onRemove={removeFromCart}
+        onNavigate={handleNavigate}
+      />
     </div>
+  );
+};
+
+export default function App() {
+  return (
+    <CartProvider>
+      <AppContent />
+    </CartProvider>
   );
 }
