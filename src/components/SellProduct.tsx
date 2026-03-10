@@ -10,14 +10,20 @@ import {
   Sparkles,
   Mic,
   IndianRupee,
-  MapPin,
-  Layers,
+  ArrowLeft,
+  Upload,
+  Camera,
+  Tag,
+  Info,
+  CheckCircle2,
+  Sparkles,
+  Mic,
+  IndianRupee,
   Plus,
   Package,
   ChevronRight,
   User
 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
 import { HandwrittenNote } from './HandwrittenNote';
 
 export const SellProduct = ({ onNavigate }: any) => {
@@ -111,8 +117,9 @@ export const SellProduct = ({ onNavigate }: any) => {
 
                     <div className="space-y-6">
                       <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Product Name</label>
+                        <label htmlFor="prod-name" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Product Name</label>
                         <input
+                          id="prod-name"
                           type="text"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -123,8 +130,9 @@ export const SellProduct = ({ onNavigate }: any) => {
 
                       <div className="grid grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Category</label>
+                          <label htmlFor="prod-category" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Category</label>
                           <select
+                            id="prod-category"
                             value={formData.category}
                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                             className="input-field appearance-none"
@@ -133,8 +141,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Region of Origin</label>
+                          <label htmlFor="prod-region" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Region of Origin</label>
                           <select
+                            id="prod-region"
                             value={formData.region}
                             onChange={(e) => setFormData({ ...formData, region: e.target.value })}
                             className="input-field appearance-none"
@@ -146,7 +155,7 @@ export const SellProduct = ({ onNavigate }: any) => {
 
                       <div>
                         <div className="flex justify-between items-center mb-3">
-                          <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft">Product Story & Description</label>
+                          <label htmlFor="prod-description" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft">Product Story & Description</label>
                           <button
                             onClick={handleVoiceDescription}
                             className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-all ${isVoiceRecording ? 'text-rose-500 animate-pulse' : 'text-accent hover:text-primary'}`}
@@ -155,6 +164,7 @@ export const SellProduct = ({ onNavigate }: any) => {
                           </button>
                         </div>
                         <textarea
+                          id="prod-description"
                           rows={5}
                           value={formData.description}
                           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -253,10 +263,11 @@ export const SellProduct = ({ onNavigate }: any) => {
                     <div className="space-y-8">
                       <div className="grid grid-cols-2 gap-8">
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Selling Price (₹)</label>
+                          <label htmlFor="prod-price" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Selling Price (₹)</label>
                           <div className="relative">
                             <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
                             <input
+                              id="prod-price"
                               type="number"
                               value={formData.price}
                               onChange={(e) => setFormData({ ...formData, price: e.target.value })}
@@ -272,8 +283,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                           </button>
                         </div>
                         <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Available Stock</label>
+                          <label htmlFor="prod-stock" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Available Stock</label>
                           <input
+                            id="prod-stock"
                             type="number"
                             value={formData.stock}
                             onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
@@ -284,8 +296,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Material Used</label>
+                        <label htmlFor="prod-material" className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Material Used</label>
                         <input
+                          id="prod-material"
                           type="text"
                           value={formData.material}
                           onChange={(e) => setFormData({ ...formData, material: e.target.value })}
