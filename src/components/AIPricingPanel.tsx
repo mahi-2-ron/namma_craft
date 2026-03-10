@@ -9,7 +9,6 @@ interface AIPricingPanelProps {
 }
 
 export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
-  // Artisan guidance logic
   const getSuggestedRange = () => {
     if (!name || name.length < 3) return { min: 1500, max: 3500 };
     const base = (name.length * 150) + 500;
@@ -49,16 +48,16 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-accent">
             <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-accent/20">
-              <img src="https://picsum.photos/seed/aarav/100/100" alt="Aarav" className="w-full h-full object-cover" />
+              <img src="https://picsum.photos/seed/aarav/100/100" alt="Market Analysis" className="w-full h-full object-cover" />
             </div>
             <div>
-              <h4 className="font-display font-bold text-lg">Aarav's Market Advice</h4>
-              <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest">Master Artisan Curator</p>
+              <h4 className="font-display font-bold text-lg">Market Advice</h4>
+              <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest">Market Curator</p>
             </div>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
             <ShieldCheck className="w-3 h-3" />
-            <span className="text-[9px] font-bold uppercase tracking-widest">Community Verified</span>
+            <span className="text-[9px] font-bold uppercase tracking-widest">Verified</span>
           </div>
         </div>
 
@@ -92,7 +91,7 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
           <div className="bg-cream/30 rounded-3xl p-6 border border-highlight/10 space-y-6 relative">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-[10px] font-bold text-text-soft uppercase tracking-widest mb-1">Recommended Starting Bid</p>
+                <p className="text-[10px] font-bold text-text-soft uppercase tracking-widest mb-1">Recommended Starting Price</p>
                 <p className="text-2xl font-display font-bold text-primary">₹{recommendedStart.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-accent">
@@ -122,15 +121,12 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
             <Info className="w-5 h-5 text-accent shrink-0" />
             <div className="space-y-1">
               <p className="text-[11px] text-primary font-medium leading-relaxed">
-                We've explored <span className="font-bold">1,240 similar treasures</span> in the {category || 'Heritage'} category.
-              </p>
-              <p className="text-[10px] text-text-soft leading-relaxed">
-                These numbers celebrate your craft's value while helping it find the right collector.
+                Analysis based on <span className="font-bold">1,240 results</span> in the {category || 'General'} category.
               </p>
             </div>
           </div>
           <HandwrittenNote rotation={-3} className="!bg-accent/5 !border-none !p-4 !text-sm">
-            "Your work is priceless, let's find it a home!"
+            Analysis completed.
           </HandwrittenNote>
         </div>
       </div>

@@ -72,7 +72,7 @@ export const foodProducts = [
     // Beverages
     { id: 21, name: 'Darjeeling First Flush Tea', creator: 'Tenzing Norgay', price: 850, region: 'Darjeeling, WB', tag: 'Specialty', image: '/images/food/tea.png', category: 'Beverages' },
     { id: 22, name: 'Kumbakonam Degree Coffee', creator: 'Ranganathan', price: 340, region: 'Thanjavur, TN', tag: 'Specialty', image: 'https://images.unsplash.com/photo-1541167760496-162955ed8a9f?auto=format&fit=crop&q=80&w=800', category: 'Beverages' },
-    { id: 23, name: 'Royal Masala Chai Blend', creator: 'Varanasi Tea', price: 280, region: 'Varanasi, UP', tag: ' स्पेशल', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&q=80&w=800', category: 'Beverages' },
+    { id: 23, name: 'Royal Masala Chai Blend', creator: 'Varanasi Tea', price: 280, region: 'Varanasi, UP', tag: 'Special', image: 'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&q=80&w=800', category: 'Beverages' },
     { id: 24, name: 'Traditional Kokum Sharbat', creator: 'Konkan Coast', price: 190, region: 'Ratnagiri, MH', tag: 'specialty', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=800', category: 'Beverages' },
     { id: 25, name: 'Banaras Thandai Mix', creator: 'Kashi Flavors', price: 320, region: 'Varanasi, UP', tag: 'Festival Special', image: 'https://images.unsplash.com/photo-1567129937968-cdad8f0d5a3a?auto=format&fit=crop&q=80&w=800', category: 'Beverages' },
 ];

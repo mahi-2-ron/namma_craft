@@ -1,4 +1,3 @@
-```javascript
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -27,7 +26,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
     quantity: '',
     festival: '',
     story: '',
-    type: 'Veg' // Veg, Non-veg, Vegan
+    type: 'Veg'
   });
 
   const [image, setImage] = useState<string | null>(null);
@@ -58,7 +57,6 @@ export const AddFoodItem = ({ onNavigate }: any) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
@@ -70,7 +68,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
         <AnimatePresence>
           <motion.div
-            key="success-message"
+            key="success-card"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-md w-full bg-white rounded-[48px] p-12 text-center shadow-premium relative overflow-hidden"
@@ -79,8 +77,8 @@ export const AddFoodItem = ({ onNavigate }: any) => {
             <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
               <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h2 className="text-3xl font-display font-bold text-primary mb-4">Listing Published!</h2>
-            <p className="text-text-soft mb-10">Your traditional food item is now live in the marketplace. Local foodies can now discover your heritage recipe.</p>
+            <h2 className="text-3xl font-display font-bold text-primary mb-4">Listing Published</h2>
+            <p className="text-text-soft mb-10">The product is now live in the marketplace.</p>
             <div className="space-y-4">
               <button onClick={() => onNavigate('creator')} className="w-full btn-primary !py-4">Back to Dashboard</button>
               <button onClick={() => setIsSuccess(false)} className="w-full py-4 text-accent font-bold uppercase tracking-widest text-xs">Add Another Item</button>
@@ -104,7 +102,6 @@ export const AddFoodItem = ({ onNavigate }: any) => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Form Section */}
           <div className="lg:col-span-7 space-y-10">
             <VoiceAssistant onDataExtracted={handleVoiceData} />
 
@@ -115,7 +112,6 @@ export const AddFoodItem = ({ onNavigate }: any) => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Image Upload */}
                 <div className="space-y-4">
                   <label htmlFor="food-image" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Food Image</label>
                   <div className="relative group">
@@ -134,7 +130,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                         <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-accent mb-4 shadow-sm group-hover:scale-110 transition-transform">
                           <Upload className="w-8 h-8" />
                         </div>
-                        <p className="text-sm font-bold text-primary">Click to upload food photo</p>
+                        <p className="text-sm font-bold text-primary">Click to upload photo</p>
                         <p className="text-[10px] text-text-soft uppercase tracking-widest mt-2">JPG, PNG up to 5MB</p>
                         <input id="food-image-upload" type="file" className="hidden" onChange={handleImageUpload} accept="image/*" />
                       </label>
@@ -144,7 +140,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="food-name" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Food Name</label>
+                    <label htmlFor="food-name" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Product Name</label>
                     <div className="relative">
                       <Utensils className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
                       <input
@@ -179,7 +175,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                   <label htmlFor="food-ingredients" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Ingredients</label>
                   <textarea
                     id="food-ingredients"
-                    placeholder="List the main ingredients used..."
+                    placeholder="List the main ingredients..."
                     className="w-full px-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium min-h-[100px] resize-none"
                     value={formData.ingredients}
                     onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
@@ -250,10 +246,10 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="food-story" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Story behind this recipe</label>
+                  <label htmlFor="food-story" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Description</label>
                   <textarea
                     id="food-story"
-                    placeholder="Tell the tradition, the memory, or the heritage of this food..."
+                    placeholder="Provide a description of the product..."
                     className="w-full px-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium min-h-[120px] resize-none"
                     value={formData.story}
                     onChange={(e) => setFormData({ ...formData, story: e.target.value })}
@@ -268,12 +264,11 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                       <button
                         key={t}
                         type="button"
-                        onClick={() => setFormData({...formData, type: t})}
-                        className={`flex - 1 py - 4 rounded - 2xl text - xs font - bold uppercase tracking - widest transition - all border - 2 ${
-  formData.type === t
-    ? 'bg-primary text-white border-primary shadow-lg'
-    : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
-} `}
+                        onClick={() => setFormData({ ...formData, type: t })}
+                        className={`flex-1 py-4 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all border-2 ${formData.type === t
+                            ? 'bg-primary text-white border-primary shadow-lg'
+                            : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
+                          }`}
                       >
                         {t === 'Veg' && <Leaf className="w-3 h-3 inline-block mr-2" />}
                         {t}
@@ -287,14 +282,13 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                   disabled={isSubmitting}
                   className="w-full btn-primary !py-6 text-sm shadow-2xl shadow-primary/20 flex items-center justify-center gap-3 group disabled:opacity-50"
                 >
-                  {isSubmitting ? 'Publishing...' : 'Publish Food Item'}
+                  {isSubmitting ? 'Publishing...' : 'Publish Listing'}
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
             </div>
           </div>
 
-          {/* Preview Section */}
           <div className="lg:col-span-5">
             <div className="sticky top-32">
               <div className="flex items-center gap-3 mb-8">
@@ -331,11 +325,11 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                       <div className="flex items-center gap-2 mb-2">
                         <MapPin className="w-3 h-3 text-accent" />
                         <span className="text-[9px] font-bold text-accent uppercase tracking-widest">
-                          {formData.region || 'Region'} Specialty
+                          {formData.region || 'Region'}
                         </span>
                       </div>
                       <h3 className="text-2xl font-display font-bold text-primary">
-                        {formData.name || 'Food Item Name'}
+                        {formData.name || 'Product Submissions'}
                       </h3>
                     </div>
                     <div className="text-right">
@@ -349,12 +343,12 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                       <Clock className="w-3.5 h-3.5" /> {formData.shelfLife || 'Shelf Life'}
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-text-soft">
-                      <Leaf className={`w - 3.5 h - 3.5 ${ formData.type === 'Veg' ? 'text-emerald-500' : 'text-rose-500' } `} /> {formData.type}
+                      <Leaf className={`w-3.5 h-3.5 ${formData.type === 'Veg' ? 'text-emerald-500' : 'text-rose-500'}`} /> {formData.type}
                     </div>
                   </div>
 
                   <p className="text-text-soft text-sm line-clamp-2 mb-8 italic leading-relaxed">
-                    "{formData.story || 'The story of your recipe will appear here...'}"
+                    "{formData.story || 'Description will appear here...'}"
                   </p>
 
                   <button className="w-full py-4 bg-cream/50 rounded-2xl text-primary font-bold text-[10px] uppercase tracking-widest cursor-default">
@@ -363,7 +357,6 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                 </div>
               </motion.div>
 
-              {/* Market Guidance Panel */}
               <div className="mt-8">
                 <AIPricingPanel name={formData.name} />
               </div>
@@ -373,7 +366,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                   Heritage Tip
                 </h4>
                 <p className="text-xs text-text-soft leading-relaxed">
-                  High-quality photos of the food in natural light tend to get 3x more orders. Don't forget to mention if it's a family secret!
+                  High-quality photos in natural light tend to result in more interest.
                 </p>
               </div>
             </div>
