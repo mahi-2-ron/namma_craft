@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mic, RefreshCw, Check, X, Languages, Volume2, Sparkles } from 'lucide-react';
+import { Mic, RefreshCw, Check, X, Languages, Volume2 } from 'lucide-react';
 import { processVoiceInput } from '../db';
 
 interface VoiceAssistantProps {
@@ -58,11 +58,10 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
       <div className="flex flex-col items-center text-center space-y-8">
         <div className="space-y-2">
           <div className="flex items-center justify-center gap-2 text-accent mb-2">
-            <Sparkles className="w-5 h-5" />
-            <h4 className="font-display font-bold text-xl">Artisan Voice Support</h4>
+            <h4 className="font-display font-bold text-xl">Voice Assistance</h4>
           </div>
           <p className="text-text-soft text-sm max-w-md">
-            Tell us about your masterpiece in your own words. We'll help draft the details and the story.
+            Describe the product and its origin in your own words. We'll help organize the details.
           </p>
         </div>
 
@@ -86,7 +85,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                     <Mic className="w-10 h-10 animate-pulse" />
                   </button>
                 </div>
-                <p className="mt-6 text-accent font-bold uppercase tracking-widest text-[10px] animate-pulse">Listening to your story...</p>
+                <p className="mt-6 text-accent font-bold uppercase tracking-widest text-[10px] animate-pulse">Listening...</p>
               </motion.div>
             ) : null}
 
@@ -101,7 +100,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 <div className="w-24 h-24 bg-primary/5 text-primary rounded-full flex items-center justify-center">
                   <RefreshCw className="w-10 h-10 animate-spin" />
                 </div>
-                <p className="mt-6 text-primary font-bold uppercase tracking-widest text-[10px]">Polishing your listing...</p>
+                <p className="mt-6 text-primary font-bold uppercase tracking-widest text-[10px]">Processing...</p>
               </motion.div>
             ) : null}
 
@@ -118,7 +117,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 >
                   <Mic className="w-10 h-10 group-hover:scale-110 transition-transform" />
                 </button>
-                <p className="mt-6 text-text-soft font-bold uppercase tracking-widest text-[10px]">Tap to share your story</p>
+                <p className="mt-6 text-text-soft font-bold uppercase tracking-widest text-[10px]">Tap to share details</p>
               </motion.div>
             ) : null}
           </AnimatePresence>
@@ -177,7 +176,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
               </div>
 
               <div className="mt-4 pt-4 border-t border-emerald-100">
-                <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest mb-1">Heritage Story</p>
+                <p className="text-[9px] font-bold text-text-soft uppercase tracking-widest mb-1">Description</p>
                 <p className="text-xs text-primary line-clamp-2 leading-relaxed">{extractedData.craftStory}</p>
               </div>
             </div>
@@ -193,7 +192,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 onClick={handleConfirm}
                 className="flex-1 py-4 bg-primary text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-primary-light transition-all flex items-center justify-center gap-2"
               >
-                <Check className="w-4 h-4" /> Looks Perfect
+                <Check className="w-4 h-4" /> Confirm Details
               </button>
             </div>
           </motion.div>

@@ -10,7 +10,6 @@ import {
   MapPin,
   IndianRupee,
   Package,
-  Sparkles,
   ArrowLeft,
   CheckCircle2
 } from 'lucide-react';
@@ -107,8 +106,8 @@ export const AddFoodItem = ({ onNavigate }: any) => {
 
             <div className="bg-white rounded-[48px] p-10 md:p-12 shadow-premium border border-highlight/10">
               <div className="mb-10">
-                <h1 className="text-4xl font-display font-bold text-primary mb-2">Add Traditional Food Item</h1>
-                <p className="text-text-soft">Share your homemade heritage recipes with the world.</p>
+                <h1 className="text-4xl font-display font-bold text-primary mb-2">Add Food Item</h1>
+                <p className="text-text-soft">Provide details for the listing.</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
@@ -235,12 +234,11 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                 <div className="space-y-2">
                   <label htmlFor="food-festival" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Festival Tag (Optional)</label>
                   <div className="relative">
-                    <Sparkles className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
                     <input
                       id="food-festival"
                       type="text"
                       placeholder="e.g. Diwali Special"
-                      className="w-full pl-14 pr-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                      className="w-full px-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
                       value={formData.festival}
                       onChange={(e) => setFormData({ ...formData, festival: e.target.value })}
                     />
@@ -268,8 +266,8 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                         type="button"
                         onClick={() => setFormData({ ...formData, type: t })}
                         className={`flex-1 py-4 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all border-2 ${formData.type === t
-                            ? 'bg-primary text-white border-primary shadow-lg'
-                            : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
+                          ? 'bg-primary text-white border-primary shadow-lg'
+                          : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
                           }`}
                       >
                         {t === 'Veg' && <Leaf className="w-3 h-3 inline-block mr-2" />}
@@ -367,7 +365,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
 
               <div className="mt-8 p-6 bg-accent/5 rounded-3xl border border-accent/10">
                 <h4 className="text-xs font-bold text-primary uppercase tracking-widest mb-3 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-accent" /> Heritage Tip
+                  Heritage Tip
                 </h4>
                 <p className="text-xs text-text-soft leading-relaxed">
                   High-quality photos of the food in natural light tend to get 3x more orders. Don't forget to mention if it's a family secret!
