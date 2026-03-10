@@ -25,9 +25,10 @@ export const Footer = ({ onNavigate }: any) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
           <div className="lg:col-span-5">
             <button
-              onClick={() => onNavigate && onNavigate('home')}
+              onClick={() => onNavigate?.('home')}
               className="flex items-center gap-3 text-2xl font-display font-bold text-accent mb-4 group"
             >
+
               <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:text-primary transition-all duration-500">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 22C12 22 16 18 16 12C16 6 12 4 12 4C12 4 8 6 8 12C8 18 12 22 12 22Z" fill="currentColor" />
@@ -40,9 +41,9 @@ export const Footer = ({ onNavigate }: any) => {
               A global stage for India's master artisans. Bridging traditional craftsmanship and modern living.
             </p>
             <div className="flex gap-3">
-              {[{ Icon: Instagram, label: 'Instagram' }, { Icon: Twitter, label: 'Twitter' }, { Icon: Facebook, label: 'Facebook' }].map(({ Icon, label }, idx) => (
+              {[{ Icon: Instagram, label: 'Instagram' }, { Icon: Twitter, label: 'Twitter' }, { Icon: Facebook, label: 'Facebook' }].map(({ Icon, label }) => (
                 <button
-                  key={idx}
+                  key={label}
                   className="w-9 h-9 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 hover:bg-accent hover:text-primary hover:border-accent transition-all duration-300"
                   aria-label={`Follow us on ${label}`}
                 >
@@ -50,15 +51,17 @@ export const Footer = ({ onNavigate }: any) => {
                 </button>
               ))}
             </div>
+
           </div>
 
           <div className="lg:col-span-2">
             <h2 className="text-accent font-bold uppercase tracking-[0.2em] text-xs mb-4">Market</h2>
             <ul className="space-y-2 text-cream/60 text-sm font-medium">
-              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">New Arrivals</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">Best Sellers</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('artisan')} className="hover:text-accent transition-colors">Artisan Stories</button></li>
-              <li><button onClick={() => onNavigate && onNavigate('marketplace')} className="hover:text-accent transition-colors">Gift Cards</button></li>
+              <li><button onClick={() => onNavigate?.('marketplace')} className="hover:text-accent transition-colors">New Arrivals</button></li>
+              <li><button onClick={() => onNavigate?.('marketplace')} className="hover:text-accent transition-colors">Best Sellers</button></li>
+              <li><button onClick={() => onNavigate?.('artisan')} className="hover:text-accent transition-colors">Artisan Stories</button></li>
+              <li><button onClick={() => onNavigate?.('marketplace')} className="hover:text-accent transition-colors">Gift Cards</button></li>
+
             </ul>
           </div>
 

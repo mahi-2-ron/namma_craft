@@ -105,8 +105,8 @@ export const BuyerDashboard = ({ onNavigate }: any) => {
                             key={item.id}
                             onClick={() => setActiveTab(item.id)}
                             className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 ${activeTab === item.id
-                                    ? 'bg-accent text-primary font-bold shadow-lg shadow-accent/10'
-                                    : 'text-cream/60 hover:bg-white/5 hover:text-cream'
+                                ? 'bg-accent text-primary font-bold shadow-lg shadow-accent/10'
+                                : 'text-cream/60 hover:bg-white/5 hover:text-cream'
                                 }`}
                         >
                             <item.icon className="w-5 h-5" />
@@ -290,9 +290,10 @@ export const BuyerDashboard = ({ onNavigate }: any) => {
                                                 <input
                                                     type="email"
                                                     defaultValue={userProfile?.email}
-                                                    disabled={true}
-                                                    className="w-full pl-14 pr-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent outline-none transition-all font-medium opacity-50 cursor-not-allowed"
+                                                    disabled={!isEditing}
+                                                    className="w-full pl-14 pr-6 py-4 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all font-medium disabled:opacity-50"
                                                 />
+
                                             </div>
                                         </div>
                                         <div className="space-y-2">

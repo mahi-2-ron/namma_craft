@@ -46,7 +46,7 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
       const authData = isLogin ? {} : {
         displayName: fullName,
         email,
-        age: age ? parseInt(age) : undefined,
+        age: age ? Number.parseInt(age) : undefined,
         location,
         phone,
         gender,
