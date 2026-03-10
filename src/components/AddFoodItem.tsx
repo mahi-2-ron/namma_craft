@@ -1,3 +1,4 @@
+```javascript
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -67,22 +68,25 @@ export const AddFoodItem = ({ onNavigate }: any) => {
   if (isSuccess) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center p-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[48px] p-12 text-center shadow-premium relative overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-2 bg-emerald-500" />
-          <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
-          <h2 className="text-3xl font-display font-bold text-primary mb-4">Listing Published!</h2>
-          <p className="text-text-soft mb-10">Your traditional food item is now live in the marketplace. Local foodies can now discover your heritage recipe.</p>
-          <div className="space-y-4">
-            <button onClick={() => onNavigate('creator')} className="w-full btn-primary !py-4">Back to Dashboard</button>
-            <button onClick={() => setIsSuccess(false)} className="w-full py-4 text-accent font-bold uppercase tracking-widest text-xs">Add Another Item</button>
-          </div>
-        </motion.div>
+        <AnimatePresence>
+          <motion.div
+            key="success-message"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-md w-full bg-white rounded-[48px] p-12 text-center shadow-premium relative overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-2 bg-emerald-500" />
+            <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
+              <CheckCircle2 className="w-10 h-10" />
+            </div>
+            <h2 className="text-3xl font-display font-bold text-primary mb-4">Listing Published!</h2>
+            <p className="text-text-soft mb-10">Your traditional food item is now live in the marketplace. Local foodies can now discover your heritage recipe.</p>
+            <div className="space-y-4">
+              <button onClick={() => onNavigate('creator')} className="w-full btn-primary !py-4">Back to Dashboard</button>
+              <button onClick={() => setIsSuccess(false)} className="w-full py-4 text-accent font-bold uppercase tracking-widest text-xs">Add Another Item</button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   }
@@ -258,17 +262,18 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                 </div>
 
                 <div className="space-y-4">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Food Type</label>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Food Type</span>
                   <div className="flex gap-4">
                     {['Veg', 'Non-veg', 'Vegan'].map((t) => (
                       <button
                         key={t}
                         type="button"
-                        onClick={() => setFormData({ ...formData, type: t })}
-                        className={`flex-1 py-4 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all border-2 ${formData.type === t
-                          ? 'bg-primary text-white border-primary shadow-lg'
-                          : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
-                          }`}
+                        onClick={() => setFormData({...formData, type: t})}
+                        className={`flex - 1 py - 4 rounded - 2xl text - xs font - bold uppercase tracking - widest transition - all border - 2 ${
+  formData.type === t
+    ? 'bg-primary text-white border-primary shadow-lg'
+    : 'bg-cream/30 text-text-soft border-transparent hover:bg-cream/50'
+} `}
                       >
                         {t === 'Veg' && <Leaf className="w-3 h-3 inline-block mr-2" />}
                         {t}
@@ -344,7 +349,7 @@ export const AddFoodItem = ({ onNavigate }: any) => {
                       <Clock className="w-3.5 h-3.5" /> {formData.shelfLife || 'Shelf Life'}
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-text-soft">
-                      <Leaf className={`w-3.5 h-3.5 ${formData.type === 'Veg' ? 'text-emerald-500' : 'text-rose-500'}`} /> {formData.type}
+                      <Leaf className={`w - 3.5 h - 3.5 ${ formData.type === 'Veg' ? 'text-emerald-500' : 'text-rose-500' } `} /> {formData.type}
                     </div>
                   </div>
 
