@@ -133,6 +133,21 @@ export const Login = ({ onNavigate, initialMode = 'login' }: any) => {
                   />
                 </div>
               </div>
+              <div className="space-y-1">
+                <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Email Address</label>
+                <div className="relative">
+                  <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="arjun@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-14 pr-6 py-3 bg-cream/30 rounded-2xl border-2 border-transparent focus:border-accent focus:bg-white outline-none transition-all text-sm font-medium"
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label htmlFor="age" className="text-[10px] font-bold uppercase tracking-widest text-text-soft ml-4">Age</label>
