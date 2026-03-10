@@ -7,9 +7,6 @@ import {
   Tag,
   Info,
   CheckCircle2,
-  Sparkles,
-  Mic,
-  IndianRupee,
   Plus,
   Package,
   ChevronRight,
@@ -87,8 +84,8 @@ export const SellProduct = ({ onNavigate }: any) => {
 
       <div className="container-custom max-w-4xl mt-12">
         <div className="mb-12">
-          <h1 className="text-4xl font-display font-bold text-primary mb-4">List a New Masterpiece</h1>
-          <p className="text-text-soft text-lg">Share your heritage craft with a global audience of connoisseurs.</p>
+          <h1 className="text-4xl font-display font-bold text-primary mb-4">List a New Product</h1>
+          <p className="text-text-soft text-lg">Add details about the product and its origin.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -163,9 +160,8 @@ export const SellProduct = ({ onNavigate }: any) => {
                           className="input-field resize-none"
                         />
                         {isAnalyzing && (
-                          <div className="mt-3 flex items-center gap-2 text-accent animate-pulse">
-                            <Sparkles className="w-4 h-4" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Polishing your story...</span>
+                          <div className="mt-3 flex items-center gap-2 text-accent">
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Processing description...</span>
                           </div>
                         )}
                       </div>
@@ -270,7 +266,7 @@ export const SellProduct = ({ onNavigate }: any) => {
                             onClick={handlePriceSuggestion}
                             className="mt-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-primary transition-colors"
                           >
-                            <Sparkles className="w-3.5 h-3.5" /> Get Market Guidance
+                            Suggested Price
                           </button>
                         </div>
                         <div>
@@ -351,8 +347,7 @@ export const SellProduct = ({ onNavigate }: any) => {
                 <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-6">
-                    <Sparkles className="w-6 h-6 text-accent" />
-                    <h3 className="text-lg font-display font-bold">Market Insights</h3>
+                    <h3 className="text-lg font-display font-bold">Market Analysis</h3>
                   </div>
 
                   <div className="space-y-6">
