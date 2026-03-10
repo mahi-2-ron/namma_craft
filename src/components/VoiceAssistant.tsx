@@ -88,7 +88,9 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 </div>
                 <p className="mt-6 text-accent font-bold uppercase tracking-widest text-[10px] animate-pulse">Listening to your story...</p>
               </motion.div>
-            ) : isProcessing ? (
+            ) : null}
+
+            {!isListening && isProcessing ? (
               <motion.div
                 key="processing"
                 initial={{ opacity: 0 }}
@@ -101,7 +103,9 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 </div>
                 <p className="mt-6 text-primary font-bold uppercase tracking-widest text-[10px]">Polishing your listing...</p>
               </motion.div>
-            ) : (
+            ) : null}
+
+            {!isListening && !isProcessing ? (
               <motion.div
                 key="idle"
                 initial={{ opacity: 0 }}
@@ -116,7 +120,7 @@ export const VoiceAssistant = ({ onDataExtracted }: VoiceAssistantProps) => {
                 </button>
                 <p className="mt-6 text-text-soft font-bold uppercase tracking-widest text-[10px]">Tap to share your story</p>
               </motion.div>
-            )}
+            ) : null}
           </AnimatePresence>
         </div>
 

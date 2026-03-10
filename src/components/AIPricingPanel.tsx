@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, Info, ShieldCheck, Zap } from 'lucide-react';
+import { TrendingUp, Info, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import { HandwrittenNote } from './HandwrittenNote';
 
@@ -21,7 +21,11 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
     const scores = [45, 72, 94];
     const levels = ['Growing', 'Steady', 'High'];
     const idx = name.length % 3;
-    const color = idx === 2 ? 'text-emerald-500' : idx === 1 ? 'text-accent' : 'text-amber-600';
+
+    let color = 'text-amber-600';
+    if (idx === 2) color = 'text-emerald-500';
+    if (idx === 1) color = 'text-accent';
+
     return {
       level: levels[idx],
       color,
@@ -31,6 +35,7 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
 
   const range = getSuggestedRange();
   const demand = getDemand();
+  const recommendedStart = range.min * 0.8;
 
   return (
     <motion.div
@@ -88,7 +93,7 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold text-text-soft uppercase tracking-widest mb-1">Recommended Starting Bid</p>
-                <p className="text-2xl font-display font-bold text-primary">₹{(range.min * 0.8).toLocaleString()}</p>
+                <p className="text-2xl font-display font-bold text-primary">₹{recommendedStart.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-accent">
                 <TrendingUp className="w-6 h-6" />
@@ -100,7 +105,7 @@ export const AIPricingPanel = ({ name, category }: AIPricingPanelProps) => {
               <div className="h-12 w-full flex items-end gap-1">
                 {[40, 65, 45, 80, 55, 90, 75, 95].map((h, i) => (
                   <motion.div
-                    key={i}
+                    key={`bar-${i}`}
                     initial={{ height: 0 }}
                     animate={{ height: `${h}%` }}
                     transition={{ delay: i * 0.05 }}
