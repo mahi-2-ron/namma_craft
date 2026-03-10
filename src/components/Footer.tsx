@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
+import { useToast } from '../ToastContext';
 
 export const Footer = ({ onNavigate }: any) => {
+  const { showToast } = useToast();
+  const [email, setEmail] = useState('');
+
+  const handleJoin = () => {
+    if (email) {
+      showToast('Successfully subscribed: ' + email);
+      setEmail('');
+    } else {
+      showToast('Please enter a valid email', 'error');
+    }
+  };
+
   return (
     <footer className="bg-primary text-cream pt-8 pb-6 relative overflow-hidden">
       {/* Decorative Background */}
@@ -67,10 +80,13 @@ export const Footer = ({ onNavigate }: any) => {
               <input
                 id="newsletter-email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-14 focus:outline-none focus:border-accent transition-all text-sm placeholder:text-cream/20"
               />
               <button
+                onClick={handleJoin}
                 className="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-accent text-primary rounded-lg flex items-center justify-center hover:bg-white transition-all"
                 aria-label="Subscribe to newsletter"
               >
@@ -78,6 +94,7 @@ export const Footer = ({ onNavigate }: any) => {
               </button>
             </div>
           </div>
+
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-cream/30">

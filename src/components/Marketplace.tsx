@@ -99,6 +99,18 @@ export const Marketplace = ({ onNavigate }: any) => {
   const [sortBy, setSortBy] = useState('Popular');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const { showToast } = useToast();
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+
+  const handleNewsletterJoin = () => {
+    if (newsletterEmail) {
+      showToast('Welcome! Artisan previews will be sent to ' + newsletterEmail);
+      setNewsletterEmail('');
+    } else {
+      showToast('Please enter a valid email address', 'error');
+    }
+  };
+
 
   const toggleMaterial = (material: string) => {
     setCurrentPage(1); // Reset to first page when filtering
@@ -388,9 +400,16 @@ export const Marketplace = ({ onNavigate }: any) => {
             Our artisans are always crafting new masterpieces. Join our inner circle to get notified about exclusive drops and custom commission opportunities.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-lg mx-auto">
-            <input type="email" placeholder="Enter your email address" className="input-field !bg-white/5 !border-white/10 !text-white placeholder:text-white/30 !rounded-full !px-8" />
-            <button className="btn-accent whitespace-nowrap !px-10">Join Now</button>
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
+              className="input-field !bg-white/5 !border-white/10 !text-white placeholder:text-white/30 !rounded-full !px-8"
+            />
+            <button onClick={handleNewsletterJoin} className="btn-accent whitespace-nowrap !px-10">Join Now</button>
           </div>
+
         </div>
       </section>
 
