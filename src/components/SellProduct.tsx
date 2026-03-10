@@ -7,6 +7,8 @@ import {
   Tag,
   Info,
   CheckCircle2,
+  IndianRupee,
+  Mic,
   Plus,
   Package,
   ChevronRight,
