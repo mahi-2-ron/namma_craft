@@ -1,38 +1,38 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Rocket, Brain, Globe, Smartphone, Sparkles, ShieldCheck, Map } from 'lucide-react';
+import { Rocket, Lightbulb, Globe, Smartphone, Heart, ShieldCheck } from 'lucide-react';
 import { HandwrittenNote } from './HandwrittenNote';
 
 const plans = [
   {
-    icon: Brain,
-    title: "AI-Driven Discovery",
-    description: "Smarter recommendations that understand regional preferences and seasonal trends for a personalized experience."
+    icon: Lightbulb,
+    title: "Smarter Discovery",
+    description: "Enhanced recommendations that understand regional preferences and seasonal trends for a better experience."
   },
   {
     icon: Rocket,
     title: "Advanced Auctions",
-    description: "Real-time analytics and fair-price prediction to ensure artisans receive the true value of their heritage work."
+    description: "Real-time analytics and fair-price guidance to ensure artisans receive the true value of their work."
   },
   {
     icon: Globe,
-    title: "Global Accessibility",
-    description: "Voice-based uploads and multilingual support to empower rural artisans to list products in their local language."
+    title: "Global Reach",
+    description: "Voice-based uploads and multilingual support to empower rural artisans to list products easily."
   },
   {
     icon: Smartphone,
-    title: "Mobile Ecosystem",
-    description: "Dedicated mobile application with low-internet mode for seamless use in remote artisan clusters."
+    title: "Mobile App",
+    description: "Dedicated mobile application with offline modes for use in remote artisan clusters."
   },
   {
     icon: ShieldCheck,
-    title: "Digital Heritage",
-    description: "Virtual exhibitions and blockchain-verified authenticity certificates for every handmade masterpiece."
+    title: "Heritage Preservation",
+    description: "Virtual exhibitions and verified authenticity certificates for every handcrafted piece."
   },
   {
-    icon: Sparkles,
+    icon: Heart,
     title: "Festival Modes",
-    description: "Immersive discovery modes tailored to global cultural festivals and regional celebrations."
+    description: "Tailored discovery modes for cultural festivals and regional celebrations."
   }
 ];
 
@@ -40,7 +40,7 @@ export const FuturePlans = () => {
   return (
     <section className="section-spacing bg-cream relative overflow-hidden">
       <div className="absolute inset-0 mandala-bg opacity-[0.03] pointer-events-none" />
-      
+
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <motion.div
@@ -48,11 +48,11 @@ export const FuturePlans = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-full text-[10px] font-bold uppercase tracking-widest mb-6"
           >
-            <Rocket className="w-3 h-3" /> Our Vision for Tomorrow
+            <Rocket className="w-3 h-3" /> Our Vision
           </motion.div>
-          <h2 className="text-primary mb-8">Future Plans</h2>
+          <h2 className="text-primary mb-8">Roadmap</h2>
           <p className="text-text-soft text-lg leading-relaxed">
-            Our platform is designed to grow into a comprehensive cultural marketplace that supports artisans, home food creators, and collectors worldwide. In the future, we plan to enhance the system with advanced AI features, broader global reach, and deeper cultural engagement.
+            Our platform is built to grow into a comprehensive cultural marketplace that supports artisans, home food creators, and collectors worldwide. We plan to enhance the experience with deeper cultural engagement and broader global reach.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export const FuturePlans = () => {
               {index === 0 && (
                 <div className="absolute -top-6 -right-6 z-10 hidden lg:block">
                   <HandwrittenNote rotation={10} className="!bg-accent/10 !text-accent !border-accent/20 !text-sm">
-                    "Coming Q3 2026"
+                    "Coming Soon"
                   </HandwrittenNote>
                 </div>
               )}
@@ -92,11 +92,11 @@ export const FuturePlans = () => {
           <div className="absolute inset-0 mandala-bg opacity-[0.05] pointer-events-none" />
           <div className="relative z-10 max-w-3xl mx-auto">
             <p className="text-cream/80 text-lg leading-relaxed italic mb-8">
-              "By continuously combining technology with tradition, our goal is to preserve cultural heritage while creating sustainable global opportunities for local creators."
+              "By combining support with tradition, we aim to preserve cultural heritage while creating sustainable opportunities for creators."
             </p>
             <div className="flex justify-center">
               <HandwrittenNote rotation={-2} className="!bg-white/10 !text-white !border-white/20 !text-lg">
-                "Preserving the past, building the future."
+                "Preserving craftsmanship for the future."
               </HandwrittenNote>
             </div>
           </div>

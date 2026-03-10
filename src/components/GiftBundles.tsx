@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Gift, ChevronRight, Sparkles, Package, Heart, User } from 'lucide-react';
+import { Gift, ChevronRight, Package, Heart, User } from 'lucide-react';
 import { HandwrittenNote } from './HandwrittenNote';
 
 const bundles = [
@@ -11,7 +11,7 @@ const bundles = [
     price: 5200,
     items: ["Mysore Silk Stole", "Mysore Pak (500g)", "Sandalwood Incense"],
     image: "https://picsum.photos/seed/karnataka-gift/800/600",
-    tag: "Regional Special"
+    tag: "Regional Specialty"
   },
   {
     id: 2,
@@ -43,11 +43,11 @@ export const GiftBundles = ({ onNavigate }: any) => {
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-[1px] w-8 bg-accent/30" />
-              <span className="text-accent font-bold text-[10px] uppercase tracking-widest">Curated Experiences</span>
+              <span className="text-accent font-bold text-[10px] uppercase tracking-widest">Collections</span>
             </div>
             <h2 className="text-primary mb-4">Cultural Gift Bundles</h2>
             <p className="text-text-soft text-lg">
-              Thoughtfully curated collections that bring together the best of Indian crafts and flavors in a premium gift experience.
+              Thoughtfully curated collections that bring together the best of Indian crafts and flavors.
             </p>
           </div>
           <button
@@ -82,8 +82,8 @@ export const GiftBundles = ({ onNavigate }: any) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
                 <div className="absolute top-6 left-6">
-                  <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-bold text-primary uppercase tracking-widest shadow-sm flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-accent" /> {bundle.tag}
+                  <span className="px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-bold text-primary uppercase tracking-widest shadow-sm">
+                    {bundle.tag}
                   </span>
                 </div>
 
@@ -133,7 +133,6 @@ export const GiftBundles = ({ onNavigate }: any) => {
           ))}
         </div>
 
-        {/* Custom Bundle CTA */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-32 items-center">
           <div className="lg:col-span-4">
             <div className="bg-white/40 backdrop-blur-md p-8 rounded-[32px] border border-white/60 shadow-premium relative">
@@ -143,10 +142,10 @@ export const GiftBundles = ({ onNavigate }: any) => {
                 </div>
               </div>
               <h4 className="text-lg font-display font-bold text-primary mb-4">Curator's Note</h4>
-              <p className="font-handwriting text-xl text-primary leading-tight">
-                "I personally visited the weavers in Mysore to select the silk for our Heritage Pack. It's truly one-of-a-kind."
+              <p className="font-hand text-xl text-primary leading-tight">
+                "I personally visit weavers to select the materials for our Heritage Packs. Every item has a story."
               </p>
-              <p className="text-[10px] text-accent font-bold uppercase tracking-widest mt-4">— Meera, Gift Curator</p>
+              <p className="text-[10px] text-accent font-bold uppercase tracking-widest mt-4">— Meera, Curator</p>
             </div>
           </div>
           <div className="lg:col-span-8">
@@ -160,9 +159,9 @@ export const GiftBundles = ({ onNavigate }: any) => {
 
               <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
                 <div className="max-w-xl text-center lg:text-left">
-                  <h3 className="text-white text-3xl md:text-4xl mb-4">Create Your Own Heritage Box</h3>
+                  <h3 className="text-white text-3xl md:text-4xl mb-4">Personalized Heritage Box</h3>
                   <p className="text-cream/70 text-lg">
-                    Mix and match your favorite crafts and flavors to create a personalized gift that tells a unique story.
+                    Mix and match favorite crafts and flavors to create a gift that tells a unique story.
                   </p>
                 </div>
                 <button
