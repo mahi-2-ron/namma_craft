@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ArrowLeft, 
-  Upload, 
-  Camera, 
-  Tag, 
-  Info, 
-  CheckCircle2, 
+import {
+  ArrowLeft,
+  Upload,
+  Camera,
+  Tag,
+  Info,
+  CheckCircle2,
   Sparkles,
   Mic,
   IndianRupee,
@@ -23,7 +23,7 @@ import { HandwrittenNote } from './HandwrittenNote';
 export const SellProduct = ({ onNavigate }: any) => {
   const [step, setStep] = useState(1);
   const [isVoiceRecording, setIsVoiceRecording] = useState(false);
-  const [aiAnalyzing, setAiAnalyzing] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     category: 'Pottery',
@@ -41,9 +41,9 @@ export const SellProduct = ({ onNavigate }: any) => {
     setIsVoiceRecording(true);
     setTimeout(() => {
       setIsVoiceRecording(false);
-      setAiAnalyzing(true);
+      setIsAnalyzing(true);
       setTimeout(() => {
-        setAiAnalyzing(false);
+        setIsAnalyzing(false);
         setFormData({
           ...formData,
           name: 'Hand-Painted Blue Pottery Vase',
@@ -55,10 +55,10 @@ export const SellProduct = ({ onNavigate }: any) => {
   };
 
   const handlePriceSuggestion = async () => {
-    setAiAnalyzing(true);
-    // Simulate AI analysis
+    setIsAnalyzing(true);
+    // Analyze market trends
     setTimeout(() => {
-      setAiAnalyzing(false);
+      setIsAnalyzing(false);
       setFormData({ ...formData, price: '2450' });
     }, 1500);
   };
@@ -68,7 +68,7 @@ export const SellProduct = ({ onNavigate }: any) => {
       {/* Header */}
       <div className="bg-white border-b border-highlight/10 sticky top-0 z-40">
         <div className="container-custom h-20 flex items-center justify-between">
-          <button 
+          <button
             onClick={() => onNavigate('creator')}
             className="flex items-center gap-2 text-primary hover:text-accent transition-colors font-bold text-sm uppercase tracking-widest"
           >
@@ -77,9 +77,9 @@ export const SellProduct = ({ onNavigate }: any) => {
           <div className="flex items-center gap-4">
             <div className="flex gap-2">
               {[1, 2, 3].map((s) => (
-                <div 
-                  key={s} 
-                  className={`w-8 h-1.5 rounded-full transition-all duration-500 ${step >= s ? 'bg-accent' : 'bg-primary/5'}`} 
+                <div
+                  key={s}
+                  className={`w-8 h-1.5 rounded-full transition-all duration-500 ${step >= s ? 'bg-accent' : 'bg-primary/5'}`}
                 />
               ))}
             </div>
@@ -108,14 +108,14 @@ export const SellProduct = ({ onNavigate }: any) => {
                     <h3 className="text-xl font-display font-bold text-primary mb-8 flex items-center gap-3">
                       <Package className="w-6 h-6 text-accent" /> Basic Information
                     </h3>
-                    
+
                     <div className="space-y-6">
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Product Name</label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="e.g. Hand-Painted Blue Pottery Vase"
                           className="input-field"
                         />
@@ -124,9 +124,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                       <div className="grid grid-cols-2 gap-6">
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Category</label>
-                          <select 
+                          <select
                             value={formData.category}
-                            onChange={(e) => setFormData({...formData, category: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                             className="input-field appearance-none"
                           >
                             {categories.map(cat => <option key={cat}>{cat}</option>)}
@@ -134,9 +134,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Region of Origin</label>
-                          <select 
+                          <select
                             value={formData.region}
-                            onChange={(e) => setFormData({...formData, region: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, region: e.target.value })}
                             className="input-field appearance-none"
                           >
                             {regions.map(r => <option key={r}>{r}</option>)}
@@ -147,24 +147,24 @@ export const SellProduct = ({ onNavigate }: any) => {
                       <div>
                         <div className="flex justify-between items-center mb-3">
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft">Product Story & Description</label>
-                          <button 
+                          <button
                             onClick={handleVoiceDescription}
                             className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-all ${isVoiceRecording ? 'text-rose-500 animate-pulse' : 'text-accent hover:text-primary'}`}
                           >
                             <Mic className="w-3.5 h-3.5" /> {isVoiceRecording ? 'Recording...' : 'Describe by Voice'}
                           </button>
                         </div>
-                        <textarea 
+                        <textarea
                           rows={5}
                           value={formData.description}
-                          onChange={(e) => setFormData({...formData, description: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                           placeholder="Tell the story behind this piece..."
                           className="input-field resize-none"
                         />
-                        {aiAnalyzing && (
+                        {isAnalyzing && (
                           <div className="mt-3 flex items-center gap-2 text-accent animate-pulse">
                             <Sparkles className="w-4 h-4" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">AI is crafting your story...</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Polishing your story...</span>
                           </div>
                         )}
                       </div>
@@ -172,7 +172,7 @@ export const SellProduct = ({ onNavigate }: any) => {
                   </div>
 
                   <div className="flex justify-end">
-                    <button 
+                    <button
                       onClick={() => setStep(2)}
                       className="btn-primary !px-12 py-4 flex items-center gap-3"
                     >
@@ -193,7 +193,7 @@ export const SellProduct = ({ onNavigate }: any) => {
                     <h3 className="text-xl font-display font-bold text-primary mb-8 flex items-center gap-3">
                       <Camera className="w-6 h-6 text-accent" /> Product Media
                     </h3>
-                    
+
                     <div className="grid grid-cols-2 gap-6 mb-8">
                       <div className="aspect-square rounded-3xl border-2 border-dashed border-primary/10 flex flex-col items-center justify-center gap-4 hover:border-accent/40 hover:bg-accent/5 transition-all cursor-pointer group">
                         <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-accent group-hover:text-white transition-all">
@@ -222,13 +222,13 @@ export const SellProduct = ({ onNavigate }: any) => {
                   </div>
 
                   <div className="flex justify-between">
-                    <button 
+                    <button
                       onClick={() => setStep(1)}
                       className="btn-secondary !px-10"
                     >
                       Back
                     </button>
-                    <button 
+                    <button
                       onClick={() => setStep(3)}
                       className="btn-primary !px-12 flex items-center gap-3"
                     >
@@ -249,34 +249,34 @@ export const SellProduct = ({ onNavigate }: any) => {
                     <h3 className="text-xl font-display font-bold text-primary mb-8 flex items-center gap-3">
                       <Tag className="w-6 h-6 text-accent" /> Pricing & Inventory
                     </h3>
-                    
+
                     <div className="space-y-8">
                       <div className="grid grid-cols-2 gap-8">
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Selling Price (₹)</label>
                           <div className="relative">
                             <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-soft" />
-                            <input 
-                              type="number" 
+                            <input
+                              type="number"
                               value={formData.price}
-                              onChange={(e) => setFormData({...formData, price: e.target.value})}
+                              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                               placeholder="0.00"
                               className="input-field pl-12"
                             />
                           </div>
-                          <button 
+                          <button
                             onClick={handlePriceSuggestion}
                             className="mt-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-accent hover:text-primary transition-colors"
                           >
-                            <Sparkles className="w-3.5 h-3.5" /> Get AI Price Suggestion
+                            <Sparkles className="w-3.5 h-3.5" /> Get Market Guidance
                           </button>
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Available Stock</label>
-                          <input 
-                            type="number" 
+                          <input
+                            type="number"
                             value={formData.stock}
-                            onChange={(e) => setFormData({...formData, stock: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                             placeholder="1"
                             className="input-field"
                           />
@@ -285,10 +285,10 @@ export const SellProduct = ({ onNavigate }: any) => {
 
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-widest text-text-soft mb-3">Material Used</label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={formData.material}
-                          onChange={(e) => setFormData({...formData, material: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                           placeholder="e.g. Pure Silk, Teak Wood, Brass"
                           className="input-field"
                         />
@@ -307,13 +307,13 @@ export const SellProduct = ({ onNavigate }: any) => {
                   </div>
 
                   <div className="flex justify-between">
-                    <button 
+                    <button
                       onClick={() => setStep(2)}
                       className="btn-secondary !px-10"
                     >
                       Back
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         alert('Product listed successfully!');
                         onNavigate('creator');
@@ -348,9 +348,9 @@ export const SellProduct = ({ onNavigate }: any) => {
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-6">
                     <Sparkles className="w-6 h-6 text-accent" />
-                    <h3 className="text-lg font-display font-bold">AI Pricing Insights</h3>
+                    <h3 className="text-lg font-display font-bold">Market Insights</h3>
                   </div>
-                  
+
                   <div className="space-y-6">
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
                       <p className="text-[10px] uppercase tracking-widest text-cream/40 mb-2">Market Demand</p>
