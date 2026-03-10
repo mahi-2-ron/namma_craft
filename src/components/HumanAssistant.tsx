@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, User, Bot, Heart } from 'lucide-react';
+import { MessageCircle, X, Send, User, Bot, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { sendChatMessage } from '../db';
 import { HandwrittenNote } from './HandwrittenNote';
@@ -91,8 +91,8 @@ export function HumanAssistant() {
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${m.role === 'user'
-                      ? 'bg-primary text-white rounded-tr-none'
-                      : 'bg-white text-text shadow-sm border border-primary/5 rounded-tl-none'
+                    ? 'bg-primary text-white rounded-tr-none'
+                    : 'bg-white text-text shadow-sm border border-primary/5 rounded-tl-none'
                     }`}>
                     {m.content}
                   </div>
@@ -129,7 +129,7 @@ export function HumanAssistant() {
                 </button>
               </div>
               <p className="text-[10px] text-center text-text-soft mt-3 flex items-center justify-center gap-1">
-                <Sparkles className="w-3 h-3 text-accent" /> Powered by NammaCraft Heritage AI
+                Supported by NammaCraft Curators
               </p>
             </div>
           </motion.div>

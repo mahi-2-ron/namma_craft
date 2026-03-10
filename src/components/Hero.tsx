@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { HandwrittenNote } from './HandwrittenNote';
 
 export const Hero = ({ onNavigate }: any) => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-cream selection:bg-accent/20">
-      {/* Background Elements */}
       <div className="absolute inset-0 mandala-bg opacity-[0.04] pointer-events-none" />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
@@ -45,7 +44,7 @@ export const Hero = ({ onNavigate }: any) => {
                 className="btn-primary !px-12 !py-6 text-lg shadow-2xl shadow-primary/20 group flex items-center gap-4"
               >
                 Cultural Discovery
-                <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => onNavigate('marketplace')}
@@ -69,13 +68,10 @@ export const Hero = ({ onNavigate }: any) => {
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
             className="w-full lg:w-2/5 relative h-[600px]"
           >
-            {/* Collage Layout */}
             <div className="relative w-full h-full">
-              {/* Organic Background Blobs */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-accent/5 organic-blob -rotate-12 pointer-events-none" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-primary/5 organic-blob rotate-45 pointer-events-none" />
 
-              {/* Main Image */}
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="absolute top-0 right-0 w-4/5 aspect-[4/5] rounded-[40px] organic-blob overflow-hidden shadow-premium z-10"
@@ -91,7 +87,6 @@ export const Hero = ({ onNavigate }: any) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
               </motion.div>
 
-              {/* Secondary Image 1 */}
               <motion.div
                 initial={{ x: 20, y: 20 }}
                 animate={{ x: 0, y: 0 }}
@@ -106,16 +101,14 @@ export const Hero = ({ onNavigate }: any) => {
                 />
               </motion.div>
 
-              {/* Handwritten Note 1 */}
               <HandwrittenNote
                 className="absolute -bottom-12 -left-8 z-30"
                 rotation={-8}
                 delay={1}
               >
-                "Hand-spun with love"
+                "Hand-spun with care"
               </HandwrittenNote>
 
-              {/* Secondary Image 2 */}
               <motion.div
                 initial={{ x: -20, y: -20 }}
                 animate={{ x: 0, y: 0 }}
@@ -130,16 +123,14 @@ export const Hero = ({ onNavigate }: any) => {
                 />
               </motion.div>
 
-              {/* Handwritten Note 2 */}
               <HandwrittenNote
                 className="absolute -top-8 right-0 z-30"
                 rotation={12}
                 delay={1.2}
               >
-                "Centuries of tradition"
+                "Tradition preserved"
               </HandwrittenNote>
 
-              {/* Floating Badge */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
