@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import { useToast } from './ToastContext';
 import * as db from './db';
@@ -69,6 +69,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const newItem = await db.addToCart({
                 productId: product.id || product._id,
                 name: product.name,
+                artisan: product.artisan,
                 price: product.price,
                 quantity,
                 image: product.image
@@ -88,6 +89,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             showToast(`${product.name} added to cart`);
             setIsCartOpen(true);
         } catch (error) {
+            console.error("Add to cart error:", error); // TargetLintErrorIds: [console-error]
             showToast('Failed to add to cart', 'error');
         }
     };
@@ -98,6 +100,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setCartItems(prev => prev.filter(item => item.productId !== productId));
             showToast('Item removed from cart');
         } catch (error) {
+            console.error("Remove from cart error:", error); // TargetLintErrorIds: [console-error]
             showToast('Failed to remove item', 'error');
         }
     };
@@ -114,6 +117,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 item.productId === productId ? updatedItem : item
             ));
         } catch (error) {
+            console.error("Update quantity error:", error); // TargetLintErrorIds: [console-error]
             showToast('Failed to update quantity', 'error');
         }
     };
@@ -123,26 +127,29 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             await db.clearCart();
             setCartItems([]);
         } catch (error) {
+            console.error("Clear cart error:", error); // TargetLintErrorIds: [console-error]
             showToast('Failed to clear cart', 'error');
         }
     };
 
-    const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-    const cartTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
+    const cartTotal = useMemo(() => cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cartItems]);
+
+    const value = useMemo(() => ({
+        cartItems,
+        cartCount,
+        cartTotal,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        isCartOpen,
+        setIsCartOpen,
+        loading
+    }), [cartItems, cartCount, cartTotal, isCartOpen, loading]);
 
     return (
-        <CartContext.Provider value={{
-            cartItems,
-            cartCount,
-            cartTotal,
-            addToCart,
-            removeFromCart,
-            updateQuantity,
-            clearCart,
-            isCartOpen,
-            setIsCartOpen,
-            loading
-        }}>
+        <CartContext.Provider value={value}>
             {children}
         </CartContext.Provider>
     );
