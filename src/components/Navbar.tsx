@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ShoppingBag, User, Menu, X, Plus, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, X, Plus, LogOut, LayoutDashboard, ChevronDown, Globe } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { useToast } from '../ToastContext';
 import { useCart } from '../CartContext';
@@ -9,6 +9,7 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
   const { cartCount, setIsCartOpen } = useCart();
   const { showToast } = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState('English');
 
   const isBuyer = userProfile?.role === 'buyer' || !user;
 
@@ -71,6 +72,31 @@ export const Navbar = ({ onNavigate, currentPage }: any) => {
 
         {/* Right: Search + Actions */}
         <div className="flex items-center gap-3">
+          {/* Language Selector */}
+          <div className="relative group hidden sm:block">
+            <button className="flex items-center gap-1.5 p-2 hover:bg-accent/10 rounded-xl transition-all">
+              <Globe className="w-4 h-4 text-primary" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-primary hidden md:inline">{currentLang}</span>
+              <ChevronDown className="w-3 h-3 text-text-soft" />
+            </button>
+            <div className="absolute top-full right-0 mt-2 w-32 bg-white rounded-2xl shadow-premium border border-highlight/10 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              {['English', 'हिंदी', 'ಕನ್ನಡ'].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    setCurrentLang(lang);
+                    showToast(`Language set to ${lang}`);
+                  }}
+                  className={`w-full text-left px-4 py-2.5 text-xs font-bold rounded-xl transition-colors ${
+                    currentLang === lang ? 'bg-primary/5 text-primary' : 'text-text-soft hover:bg-cream hover:text-primary'
+                  }`}
+                >
+                  {lang}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="relative hidden xl:block w-52">
             <label htmlFor="nav-search" className="sr-only">Search heritage products</label>
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-accent" />
